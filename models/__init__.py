@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from sqlalchemy.sql.expression import desc
 from flask.ext.sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -39,6 +40,19 @@ class Article(db.Model):
         self.link = link
         self.description = description
         self.author = author
+
+    @staticmethod
+    def create(fid, title, pubdate, link, description, author):
+        article = Article(fid, title, pubdate, link, description, author)
+        db.session.add(article)
+        db.session.commit()
+
+    @staticmethod
+    def get_feed_page(fid, page, per_page):
+        result = Article.query.filter(Article.fid==fid) \
+                .order_by(desc(Article.pubdate)) \
+                .paginate(page, per_page=per_page)
+        return result
 
 class ArticleContent(db.Model):
     __tablename__ = 'article_content'

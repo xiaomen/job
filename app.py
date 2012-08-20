@@ -4,19 +4,29 @@
 import logging
 import config
 
-from flask import Flask, render_template
+from flask import Flask, render_template, g, request
 
 from models import *
 from utils import *
 from views.admin import admin
+from views.news import news
 
+from sheep.api.statics import static_files
 from sheep.api.sessions import SessionMiddleware, \
         FilesystemSessionStore
+from sheep.api.users import *
 
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 app.debug = config.DEBUG
+app.jinja_env.filters['s_files'] = static_files
+
+app.jinja_env.globals['generate_user_url'] = generate_user_url
+app.jinja_env.globals['generate_login_url'] = generate_login_url
+app.jinja_env.globals['generate_logout_url'] = generate_logout_url
+app.jinja_env.globals['generate_register_url'] = generate_register_url
+app.jinja_env.globals['generate_mail_url'] = generate_mail_url
 
 app.config.update(
         SQLALCHEMY_DATABASE_URI = config.DATABASE_URI,
@@ -27,6 +37,7 @@ app.config.update(
 )
 
 app.register_blueprint(admin, url_prefix='/admin')
+app.register_blueprint(news, url_prefix='/news')
 
 init_db(app)
 
@@ -38,4 +49,11 @@ app.wsgi_app = SessionMiddleware(app.wsgi_app, \
 
 @app.route('/')
 def index():
-    return 'Hello World'
+    return render_template('index.html')
+
+@app.before_request
+def before_request():
+    g.session = request.environ['xiaomen.session']
+    g.current_user = get_current_user(g.session)
+    if g.current_user:
+        g.unread_mail_count = lambda: get_unread_mail_count(g.current_user.uid)

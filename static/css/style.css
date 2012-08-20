@@ -1,0 +1,272 @@
+.content {
+    padding-left: 80px; 
+}
+
+.datepickerContainer {
+    background: transparent; 
+    padding: 10px; 
+    border: 1px solid #3999cc; 
+    color: black; 
+}
+
+.month-select {
+    background-color: #3999cc; 
+}
+
+div.datepicker tbody th {
+    text-align: center; 
+    padding: 3px 0; 
+}
+
+tr.datepickerDoW th {
+    padding: 3px 0 !important; 
+    color: #3999cc; 
+    text-align: center; 
+}
+
+td.datepickerNotInMonth a {
+    color: white !important; 
+}
+
+td.datepickerNotInMonth a:hover {
+    color: white !important; 
+}
+
+tbody.datepickerDays td {
+    border: 1px solid #CCC; 
+    padding: 2px !important; 
+    text-align: center !important; 
+}
+
+tbody.datepickerDays td a {
+    color: #AAA; 
+    font-size: 11px; 
+}
+
+table.datepickerViewDays {
+    border-collapse: separate !important; 
+    border-spacing: 2px; 
+}
+
+tbody.datepickerDays td.datepickerSelected {
+    background-color: #3999cc; 
+}
+
+td.datepickerSelected a span { 
+    color: white; 
+}
+
+.picker {
+    width: 100%; 
+    margin-top: 20px; 
+}
+
+.picker td, .picker th {
+    width: 50%; 
+    text-align: left;  
+}
+
+.step1 {
+    background: url('/selfstudy/static/img/step1.jpg') no-repeat; 
+    padding-left: 70px; 
+    padding-top: 5px; 
+    color: #777; 
+    font-weight: normal; 
+}
+
+.step2 {
+    background: url('/selfstudy/static/img/step2.jpg') no-repeat; 
+    padding-left: 70px; 
+    padding-top: 5px; 
+    color: #777; 
+    font-weight: normal; 
+}
+
+.time-period {
+    height: 222px; 
+    border: 1px solid #3999cc; 
+    margin-top: 27px; 
+    border-collapse: separate; 
+    border-spacing: 5px; 
+    padding: 20px; 
+}
+
+.time-period th, .time-period td {
+    text-align: center; 
+    vertical-align: middle; 
+}
+
+.time-period th {
+    color: #3999cc; 
+    width: 70px; 
+    min-width: 70px; 
+    font-weight: normal; 
+}
+
+.time-period td {
+    border: 1px solid #aaa; 
+    color: #aaa; 
+}
+
+.first-line td {
+    width: 56px; 
+    max-width: 56px; 
+    min-width: 56px; 
+}
+
+.result-title {
+    background: url('/selfstudy/static/img/arrow.png') no-repeat left center;  
+    width: 200px; 
+    text-align: center; 
+}
+
+.result-title h2 {
+    font-size: 18px; 
+    line-height: 38px; 
+    font-weight: normal; 
+    color: #888; 
+}
+
+.result-campus {
+    color: #888; 
+}
+
+.result-list {
+    display: inline-block; 
+    margin: 0; 
+    padding: 0; 
+}
+
+.result-list li {
+    float: left; 
+    list-style: none; 
+    margin: 10px; 
+}
+
+.result-list li a {
+    color: #3999cc; 
+    text-decoration: none; 
+}
+
+.back-btn {
+    text-align: right; 
+    margin-top: 20px; 
+}
+
+.back-btn a {
+    color: white; 
+    padding: 10px; 
+    background: #3999cc; 
+    text-decoration: none; 
+}
+
+.classroom-calendar {
+    width: 100%; 
+}
+
+.classroom-calendar th, .classroom-calendar td {
+    padding: 7px; 
+    border: 1px solid #CCC; 
+}
+
+.classroom-calendar td {
+}
+
+.classroom-calendar tr:hover td {
+}
+
+td.lesson-number {
+    width: 50px; 
+    text-align: center; 
+    vertical-align: center; 
+}
+
+.nofree {
+    background-color: #9F9F9F !important; 
+}
+
+
+.weekday, .lesson-number {
+    background: #3999cc; 
+    color: white; 
+}
+
+.classroom-meta h2 {
+    font-size: 16px; 
+    font-weight: normal; 
+    color: #AAA; 
+}
+
+.classroom-meta h3 {
+    font-size: 16px; 
+    font-weight: normal; 
+    color: #3999cc; 
+}
+
+.error {
+    border-color: red; 
+}
+
+tbody.datepickerDays td.datepickerNotInMonth.datepickerSelected {
+    background-color: #3999cc; 
+}
+
+#lesson-selected {
+    background: #3999cc; 
+    color: white; 
+}
+
+.clickable {
+    cursor: pointer; 
+    font-size: 14px; 
+    padding: 5px; 
+}
+
+.query-detail {
+    float: right; 
+    margin-top: 24px; 
+    color: #999; 
+}
+
+.legend {
+    float: right; 
+    color: #9F9F9F; 
+}
+
+.legend .free-legend, .legend .unfree-legend {
+    padding: 0px 15px; 
+}
+
+.legend .free-legend {
+    border: 1px solid #9F9F9F; 
+}
+
+.legend .unfree-legend {
+    background: #9F9F9F; 
+}
+
+.auto-width-arrow {
+    padding: 0; 
+    width: auto; 
+    text-align: left; 
+    margin: 20px 0; 
+    background: none; 
+}
+
+.left-arrow {
+    background: url('/selfstudy/static/img/left-arrow.png') no-repeat left center; 
+    padding-left: 54px; 
+}
+
+.right-arrow {
+    background: url('/selfstudy/static/img/right-arrow.png') no-repeat left center; 
+    padding-left: 54px; 
+}
+
+.datepickerToday {
+    border: 1px solid #3999cc !important; 
+}
+
+.datepickerToday a {
+    color: #3999cc !important; 
+}
