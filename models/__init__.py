@@ -20,6 +20,10 @@ class Feed(db.Model):
         self.name = name
         self.stream_id = stream_id
 
+    @staticmethod
+    def get_feeds():
+        return Feed.query.all()
+
 class Article(db.Model):
     __tablename__ = 'article'
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)

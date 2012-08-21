@@ -7,10 +7,16 @@ from models import *
 
 from config import PAGE_NUM
 
+def get_feeds():
+    return Feed.get_feeds()
+
 def get_jobs(fid, page):
     page = int(page)
     page_obj = Article.get_feed_page(fid, page, per_page=PAGE_NUM)
     return gen_list_page_obj(page_obj)
+
+def get_job_by_id(aid):
+    return Article.query.get(aid)
 
 def get_jobs_count(fid):
     return get_job_by(fid=fid).count()

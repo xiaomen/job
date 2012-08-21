@@ -5,4 +5,5 @@ SQLAlchemy==0.7.8
 Werkzeug==0.8.3
 distribute==0.6.27
 feedparser==5.1.2
+lxml==2.3.5
 wsgiref==0.1.2

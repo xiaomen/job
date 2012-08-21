@@ -1,3 +1,4 @@
+import json
 import logging
 
 from flask import Blueprint, request, abort, render_template
@@ -10,7 +11,8 @@ news = Blueprint('news', __name__)
 
 @news.route('/')
 def index():
-    pass
+    feeds = get_feeds()
+    return render_template('index.html', feeds=feeds)
 
 @news.route('/<int:feed_id>')
 def get_jobs_in_feed(feed_id):
@@ -23,3 +25,12 @@ def get_jobs_in_feed(feed_id):
     return render_template('news.html', list_page = list_page, \
             jobs = list_page.items, \
             feed_id=feed_id)
+
+@news.route('/fulltext/<int:aid>')
+def fulltext(aid):
+    a = get_job_by_id(aid)
+    url = a.link
+    result = get_fulltext(url)
+    if not a.link:
+        return 'None'
+    return result

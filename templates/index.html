@@ -1,1 +1,14 @@
-index.html
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div>
+	<ul>
+		{% for feed in feeds %}
+		<li>
+		<a href="{{ url_for('news.get_jobs_in_feed', feed_id=feed.id) }}">{{ feed.name }}</a>
+		</li>
+		{% endfor %}
+	</ul>
+</div>
+{% endblock %}
