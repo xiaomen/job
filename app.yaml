@@ -8,3 +8,9 @@ handlers:
   static_files: static/\1
 - url: /.*
   wsgi_app: app:app
+
+daemons:
+- name: feed
+  num_instances: 1
+  script: feed.py --verbose
+  mem_limit: 64M
