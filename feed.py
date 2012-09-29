@@ -15,7 +15,7 @@ logger = logging.getLogger()
 app = Flask(__name__)
 app.debug = config.DEBUG
 app.config.update(
-        SQLALCHEMY_DATABASE_URI = 'mysql://',
+        SQLALCHEMY_DATABASE_URI = 'mysql://root:Pa$$w0rd@127.0.0.1:3306/job',
         SQLALCHEMY_POOL_SIZE = 100,
         SQLALCHEMY_POOL_TIMEOUT = 10,
         SQLALCHEMY_POOL_RECYCLE = 3600
@@ -23,11 +23,17 @@ app.config.update(
 init_db(app)
 
 def get_rss_xml(url):
-    res = urlopen(url)
-    return res.read()
+    try:
+        res = urlopen(url)
+        return res.read()
+    except:
+        logger.error('open url %s error!' % url)
+        return None
 
 def process_feed(f):
     xml = get_rss_xml(f.stream_id)
+    if not xml:
+        return
     feed = feedparser.parse(xml)
     logger.info(u'fetching rss feed of {0} in {1}'.format(f.name, f.stream_id))
     for entry in feed.entries:
