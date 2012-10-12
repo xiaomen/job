@@ -36,6 +36,7 @@ def process_feed(f):
         return
     feed = feedparser.parse(xml)
     logger.info(u'fetching rss feed of {0} in {1}'.format(f.name, f.stream_id))
+    l = list()
     for entry in feed.entries:
         if not hasattr(entry, 'summary'):
             entry.summary = ''
@@ -47,8 +48,12 @@ def process_feed(f):
                 entry.link, \
                 entry.summary, \
                 entry.author)
+        l.append(article)
+
+    l.reverse()
+    for article in l:
         logger.info(u'article {0} of feed {1} has been added to db'.\
-                format(entry.title, f.name))
+                format(article.title, f.name))
         db.session.add(article)
     
 
