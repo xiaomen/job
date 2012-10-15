@@ -1,0 +1,17 @@
+{% extends "mobile/layout.html" %}
+
+{% block content %}
+
+<div class="result">
+	{{ fulltext | safe }}
+</div>
+
+<div class="back-btn">
+	{% if feed_id %}
+		<a href="{{ url_for('news.get_jobs_in_feed', feed_id=feed_id) }}">返回</a>
+	{% else %}
+		<a href="{{ url_for('news.index') }}">返回</a>
+	{% endif %}
+</div>
+
+{% endblock %}

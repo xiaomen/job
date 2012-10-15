@@ -52,9 +52,9 @@ class Article(db.Model):
         db.session.commit()
 
     @staticmethod
-    def get_feed_page(fid, page, per_page):
-        result = Article.query.filter(Article.fid==fid) \
-                .order_by(desc(Article.pubdate)) \
+    def get_page(page, per_page, **kw):
+        result = Article.query.filter_by(**kw) \
+                .order_by(desc(Article.created)) \
                 .paginate(page, per_page=per_page)
         return result
 

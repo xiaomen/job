@@ -11,8 +11,7 @@ news = Blueprint('news', __name__)
 
 @news.route('/')
 def index():
-    feeds = get_feeds()
-    return render_template('index.html', feeds=feeds)
+    return get_jobs_in_feed(None)
 
 @news.route('/<int:feed_id>')
 def get_jobs_in_feed(feed_id):
@@ -20,17 +19,22 @@ def get_jobs_in_feed(feed_id):
     if not page.isdigit():
         raise abort(404)
 
-    list_page = get_jobs(feed_id, page)
+    feeds = get_feeds()
+    if feed_id:
+        list_page = get_jobs(page, fid=feed_id)
+    else:
+        list_page = get_jobs(page)
 
     return render_template('news.html', list_page = list_page, \
             jobs = list_page.items, \
-            feed_id=feed_id)
+            feed_id=feed_id, \
+            feeds=feeds)
 
 @news.route('/fulltext/<int:aid>')
 def fulltext(aid):
+    feed_id = request.args.get('fid', None)
     a = get_job_by_id(aid)
     url = a.link
     result = get_fulltext(url)
-    if not a.link:
-        return 'None'
-    return result
+    return render_template('fulltext.html', fulltext=result, \
+            feed_id=feed_id)

@@ -49,10 +49,28 @@
     color: #777; 
 }
 
-.result {
-    margin: 0 20px; 
+.job {
+	padding-bottom: 10px;
+	margin-bottom: 10px;
 }
 
+a:visited {
+	color: #3999CC;
+}
+
+a {
+	color: #3999CC;
+	text-decoration: none;
+}
+
+.result {
+    margin: 0 5px; 
+}
+
+.result ul {
+	list-style: none;
+	padding: 0;
+}
 .result-title {
     text-align: center; 
     color: #3999CC; 
@@ -68,11 +86,11 @@
 .result-list ul {
     margin: 0; 
     padding: 0; 
-    margin-bottom: 20px; 
 }
 
 .result-list ul li {
-    display: inline;
+    float: left;
+    list-style: none;
 }
 
 .result-list ul li a {

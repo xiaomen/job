@@ -10,9 +10,9 @@ from config import PAGE_NUM
 def get_feeds():
     return Feed.get_feeds()
 
-def get_jobs(fid, page):
+def get_jobs(page, **kw):
     page = int(page)
-    page_obj = Article.get_feed_page(fid, page, per_page=PAGE_NUM)
+    page_obj = Article.get_page(page, per_page=PAGE_NUM, **kw)
     return gen_list_page_obj(page_obj)
 
 def get_job_by_id(aid):

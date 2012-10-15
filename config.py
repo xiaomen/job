@@ -8,4 +8,4 @@ SESSION_COOKIE_DOMAIN = '.xiaomen.co'
 GOOGLE_EMAIL = 'pkumarble@gmail.com'
 GOOGLE_PASSWD = 'luoruici0930'
 
-PAGE_NUM = 50
+PAGE_NUM = 10

@@ -1,0 +1,43 @@
+{% extends "mobile/layout.html" %}
+{% from "macros.html" import render_mobile_pagination %}
+
+{% block content %}
+
+<div class="query-box">
+    <div class="query-line">
+        <div class="query-title">
+            <span>学校: </span>
+        </div>
+        <div class="query-select">
+            <ul>
+				{% if not feed_id %}
+				<li class="active"><a href="#">全部</a></li>
+				{% else %}
+				<li><a href="/news">全部</a></li>
+				{% endif %}
+                {% for f in feeds %}
+                {% if feed_id == f.id %}
+                <li class="active"><a href="#">{{ f.name }}</a></li>
+                {% else %}
+				<li><a href="/news/{{ f.id }}">{{ f.name }}</a></li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="result">
+	<ul class="job-list">
+	{% for job in jobs %}
+	<li class="job"><a href="{{ url_for('news.fulltext', aid=job.id, fid=feed_id) }}">{{ job.title }}</a></li>
+	{% endfor %}
+	</ul>
+</div>
+
+{% if feed_id %}
+	{{ render_mobile_pagination(list_page, url_for('news.get_jobs_in_feed', feed_id=feed_id)) }}
+{% else %}
+	{{ render_mobile_pagination(list_page, url_for('news.index')) }}
+{% endif %}
+{% endblock %}

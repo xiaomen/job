@@ -4,7 +4,8 @@
 import logging
 import config
 
-from flask import Flask, render_template, g, request
+from flask import Flask, render_template, g, request, \
+        url_for, redirect
 
 from models import *
 from utils import *
@@ -48,8 +49,9 @@ app.wsgi_app = SessionMiddleware(app.wsgi_app, \
         cookie_domain=config.SESSION_COOKIE_DOMAIN)
 
 @app.route('/')
+@check_ua
 def index():
-    return render_template('index.html')
+    return redirect(url_for('news.index'))
 
 @app.before_request
 def before_request():
