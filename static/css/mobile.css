@@ -124,11 +124,40 @@ a {
     display: inline-block; 
 }
 
+.favorite-btn {
+	font-size: 14px;
+}
+
+.favorite-btn table {
+	width: 100%;
+	margin: 10px 0 10px 0;
+}
+
+.favorite-btn td{
+	width: 50%;
+}
+
+.favorite-btn a {
+    text-decoration: none; 
+    color: #3999CC; 
+	float: right;
+}
+
 .back-btn {
-    text-align: right; 
+	text-align: right;
 }
 
 .back-btn a {
+    text-decoration: none; 
+    color: #3999CC; 
+}
+
+input.link {
+	background: none;
+	margin: 0;
+	padding: 0;
+	border: none;
+	cursor: pointer;
     text-decoration: none; 
     color: #3999CC; 
 }

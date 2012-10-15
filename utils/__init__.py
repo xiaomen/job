@@ -1,6 +1,7 @@
 #!/usr/bin/python
 #coding:utf-8
 
+from account import *
 from ua import *
 from admin import *
 from rss import *

@@ -15,6 +15,13 @@ def get_jobs(page, **kw):
     page_obj = Article.get_page(page, per_page=PAGE_NUM, **kw)
     return gen_list_page_obj(page_obj)
 
+def get_favorite_job_by_user(uid, page):
+    page = int(page)
+    page_obj = Favorite.query.filter_by(uid=uid).paginate(page, per_page=PAGE_NUM)
+    page_obj.items = [get_job_by_id(i.aid) for i in page_obj.items]
+    return gen_list_page_obj(page_obj)
+
+
 def get_job_by_id(aid):
     return Article.query.get(aid)
 

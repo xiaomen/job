@@ -19,6 +19,7 @@
             {% else %}
             <li><a href="{{ generate_user_url(g.current_user.uid) }}">{{ g.current_user.name }}</a></li>
             {% endif %}
+			<li><a href="{{ url_for('news.get_favorite_by_user') }}">我的收藏</a></li>
 			<li><a href="{{ generate_mail_url() }}">邮件{% if g.unread_mail_count() > 0 %}({{g.unread_mail_count()}}){% endif %}</a></li>
 			<li><a href="{{ generate_logout_url() }}">登出</a></li>
             {% else %}

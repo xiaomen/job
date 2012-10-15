@@ -30,7 +30,7 @@
 <div class="result">
 	<ul class="job-list">
 	{% for job in jobs %}
-	<li class="job"><a href="{{ url_for('news.fulltext', aid=job.id, fid=feed_id) }}">{{ job.title }}</a></li>
+	<li class="job"><a href="{{ url_for('news.fulltext', aid=job.id, request_url=request.url) }}">{{ job.title }}</a></li>
 	{% endfor %}
 	</ul>
 </div>

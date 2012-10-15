@@ -67,3 +67,31 @@ class ArticleContent(db.Model):
     def __init__(self, aid, fulltext):
         self.aid = aid
         self.fulltext = fulltext
+
+class Favorite(db.Model):
+    __tablename__ = 'favorite'
+    id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
+    uid = db.Column('uid', db.Integer, nullable=False)
+    aid = db.Column('aid', db.Integer, nullable=False)
+
+    def __init__(self, uid, aid):
+        self.uid = uid
+        self.aid = aid
+
+    @staticmethod
+    def create_favorite(uid, aid):
+        f = Favorite(uid, aid)
+        db.session.add(f)
+        db.session.commit()
+
+    @staticmethod
+    def get_favorite(uid, aid):
+        return Favorite.query.filter_by(uid=uid, aid=aid).first()
+
+    @staticmethod
+    def delete_favorite(uid, aid):
+        f = get_favorite(uid, aid)
+        if not f:
+            return
+        db.delete(f)
+        db.session.commit()

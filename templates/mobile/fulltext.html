@@ -2,16 +2,37 @@
 
 {% block content %}
 
+{% if favorite %}
+{% set url = '/news/fulltext/{0}?action=delete&fid={1}'.format(article.id, feed_id) %}
+{% set button_display = '取消收藏' %}
+{% else %}
+{% set url = '/news/fulltext/{0}?action=add&fid={1}'.format(article.id, feed_id) %}
+{% set button_display = '加入收藏' %}
+{% endif %}
+
+<div class="favorite-btn">
+	<table>
+		<tr>
+			<td>
+				<form action="{{ url }}" method="post">
+					<input class="link" type="submit" value="{{ button_display }}" />
+				</form>
+			</td>
+			<td>
+				{% if request_url %}
+				<a href="{{ request_url }}">返回</a>
+				{% else %}
+				<a href="/">返回</a>
+				{% endif %}
+			</td>
+		</tr>
+	</table>
+	
+</div>
+
 <div class="result">
 	{{ fulltext | safe }}
 </div>
 
-<div class="back-btn">
-	{% if feed_id %}
-		<a href="{{ url_for('news.get_jobs_in_feed', feed_id=feed_id) }}">返回</a>
-	{% else %}
-		<a href="{{ url_for('news.index') }}">返回</a>
-	{% endif %}
-</div>
 
 {% endblock %}
