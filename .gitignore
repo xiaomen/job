@@ -29,3 +29,4 @@ venv
 permdir
 dev.yaml
 syncdb_dumps.bak
+*.swp
