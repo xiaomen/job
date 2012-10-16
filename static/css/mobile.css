@@ -2,6 +2,7 @@
     padding: 0 20px; 
     margin-top: 20px; 
     border-bottom: 1px solid #3999CC; 
+	font-size: 14px;
 }
 
 .query-title {
@@ -52,6 +53,10 @@
 .job {
 	padding-bottom: 10px;
 	margin-bottom: 10px;
+}
+
+.job-list {
+	font-size: 16px;
 }
 
 a:visited {
@@ -160,4 +165,12 @@ input.link {
 	cursor: pointer;
     text-decoration: none; 
     color: #3999CC; 
+}
+
+.next {
+	margin-right: 10px;
+}
+
+.prev {
+	margin-left: 10px;
 }

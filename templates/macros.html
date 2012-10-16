@@ -62,6 +62,7 @@
     {% if page.has_next %}
     <a href="{{ url }}?p={{ page.page + 1 }}" class="next">下一页</a>
     {% endif %}
+	( {{ page.page }}/{{ page.pages }} )
     {% if page.has_prev %}
     <a href="{{ url }}?p={{ page.page - 1 }}" class="prev">上一页</a>
     {% endif %}
