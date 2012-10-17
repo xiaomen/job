@@ -1,6 +1,9 @@
 import json
 import logging
 
+from datetime import date
+from datetime import timedelta
+
 from flask import Blueprint, request, abort, \
         render_template, url_for, redirect
 
@@ -26,10 +29,19 @@ def get_jobs_in_feed(feed_id):
     else:
         list_page = get_jobs(page)
 
+    today = date.today()
+    delta = timedelta(days=1)
+    yesterday = today - delta
+    day_before = yesterday - delta
+    day_before_day = day_before - delta
     return render_template('news.html', list_page = list_page, \
             jobs = list_page.items, \
             feed_id=feed_id, \
-            feeds=feeds)
+            feeds=feeds,
+            today = get_point_of_news(today, list_page.items), \
+            yesterday = get_point_of_news(yesterday, list_page.items), \
+            day_before = get_point_of_news(day_before, list_page.items), \
+            day_before_day = get_point_of_news(day_before_day, list_page.items))
 
 @news.route('/favorite', methods=['GET'])
 @login_required(need=True, next='http://xiaomen.co/account/register')

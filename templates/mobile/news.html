@@ -29,9 +29,37 @@
 
 <div class="result">
 	<ul class="job-list">
-	{% for job in jobs %}
-	<li class="job"><a href="{{ url_for('news.fulltext', aid=job.id, request_url=request.url) }}">{{ job.title }}</a></li>
-	{% endfor %}
+		{% if not today and not yesterday and not day_before and not day_before_day %}
+		<fieldset>
+			<legend>{{ jobs[0].created.strftime('%Y.%m.%d') }}之前发布</legend>		
+		</fieldset>
+		{% endif %}
+
+		{% for job in jobs %}
+		{% if today == job %}
+		<fieldset>
+			<legend>今日发布</legend>		
+		</fieldset>
+		{% endif %}
+		{% if yesterday == job %}
+		<fieldset>
+			<legend>昨日发布</legend>		
+		</fieldset>
+		{% endif %}
+		{% if day_before == job %}
+		<fieldset>
+			<legend>前日发布</legend>		
+		</fieldset>
+		{% endif %}
+		{% if day_before_day == job %}
+		<fieldset>
+			<legend>{{ job.created.strftime('%Y.%m.%d') }}之前发布</legend>		
+		</fieldset>
+		{% endif %}
+		<li class="job">
+		<a href="{{ url_for('news.fulltext', aid=job.id, request_url=request.url) }}">{{ job.title }}</a>
+		</li>
+		{% endfor %}
 	</ul>
 </div>
 

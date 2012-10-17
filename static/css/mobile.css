@@ -189,3 +189,13 @@ input.link {
 .prev {
 	margin-left: 10px;
 }
+
+.result fieldset {
+	border: none;
+	border-top: 1px solid #3999CC;
+}
+
+.result legend {
+	text-align: center;
+	margin: 3px;
+}
