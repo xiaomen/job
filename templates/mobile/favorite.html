@@ -23,9 +23,10 @@
 	{% endfor %}
 	</ul>
 </div>
+
+{{ render_mobile_pagination(list_page, url_for('news.get_favorite_by_user')) }}
+
 <div class="back-btn">
 	<a href="/">返回首页</a>
 </div>
-
-{{ render_mobile_pagination(list_page, url_for('news.get_favorite_by_user')) }}
 {% endblock %}
