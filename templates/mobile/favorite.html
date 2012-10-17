@@ -4,7 +4,16 @@
 {% block content %}
 
 <div class="result-title">
-	<h2>我的收藏</h2>
+	<table>
+		<tr>
+			<td>
+				<h2>我的收藏</h2>
+			</td>
+			<td>
+				<a href="/">返回首页</a>
+			</td>
+		</tr>
+	</table>
 </div>
 
 <div class="result">
@@ -13,6 +22,9 @@
 	<li class="job"><a href="{{ url_for('news.fulltext', aid=job.id, request_url=request.url) }}">{{ job.title }}</a></li>
 	{% endfor %}
 	</ul>
+</div>
+<div class="back-btn">
+	<a href="/">返回首页</a>
 </div>
 
 {{ render_mobile_pagination(list_page, url_for('news.get_favorite_by_user')) }}

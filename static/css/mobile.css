@@ -148,6 +148,21 @@ a {
 	float: right;
 }
 
+.result-title table td a {
+    text-decoration: none; 
+    color: #3999CC; 
+	float: right;
+}
+
+.result-title td { 
+	width: 50%;
+}
+
+.result-title table {
+	width: 100%;
+	margin: 10px 0 10px 0;
+}
+
 .back-btn {
 	text-align: right;
 }
