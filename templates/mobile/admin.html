@@ -1,0 +1,18 @@
+{% extends "mobile/layout.html" %}
+{% from "form_helper.html" import render_field %}
+
+{% block content %}
+<form class="admin_form" method="POST" action="/admin/">
+  <dl>
+    {{ render_field(form.id) }}
+    {{ render_field(form.title, size=100) }}
+    {{ render_field(form.date) }}
+    {{ render_field(form.place, size=100) }}
+  </dl>
+  <p><input type="submit" value="Submit"></p>
+</form>
+
+<div class="result">
+	{{ fulltext | safe }}
+</div>
+{% endblock %}

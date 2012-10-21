@@ -29,6 +29,8 @@ class Article(db.Model):
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     fid = db.Column('fid', db.Integer, nullable=False, index=True)
     title = db.Column(db.String(100), nullable=False)
+    date = db.Column(db.DateTime, default=datetime.now, nullable=True)
+    place = db.Column(db.String(100), nullable=True)
     pubdate = db.Column(db.String(100), nullable=False)
     link = db.Column(db.String(200), nullable=False)
     description = db.Column(db.String(1000), nullable=True)
@@ -37,19 +39,23 @@ class Article(db.Model):
     is_published = db.Column(db.Boolean, default=False)
     created = db.Column(db.DateTime, default=datetime.now)
 
-    def __init__(self, fid, title, pubdate, link, description, author):
+    def __init__(self, fid, title, place, \
+            pubdate, link, description, author):
         self.fid = fid
         self.title = title
+        self.place = place
         self.pubdate = pubdate
         self.link = link
         self.description = description
         self.author = author
 
     @staticmethod
-    def create(fid, title, pubdate, link, description, author):
-        article = Article(fid, title, pubdate, link, description, author)
+    def create(fid, title, place, pubdate, link, description, author):
+        article = Article(fid, title, place, pubdate, \
+                link, description, author)
         db.session.add(article)
         db.session.commit()
+        return article
 
     @staticmethod
     def get_page(page, per_page, **kw):
@@ -67,6 +73,12 @@ class ArticleContent(db.Model):
     def __init__(self, aid, fulltext):
         self.aid = aid
         self.fulltext = fulltext
+
+    @staticmethod
+    def create(aid, fulltext):
+        content = ArticleContent(aid, fulltext)
+        db.session.add(content)
+        db.session.commit()
 
 class Favorite(db.Model):
     __tablename__ = 'favorite'

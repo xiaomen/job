@@ -4,6 +4,7 @@
 import logging
 import time
 import config
+from datetime import datetime
 
 from flask import Flask
 from urllib2 import urlopen
@@ -36,26 +37,22 @@ def process_feed(f):
         return
     feed = feedparser.parse(xml)
     logger.info(u'fetching rss feed of {0} in {1}'.format(f.name, f.stream_id))
-    l = list()
     for entry in feed.entries:
         if not hasattr(entry, 'summary'):
             entry.summary = ''
         if Article.query.filter_by(link=entry.link).first():
             break
-        article = Article(f.id, \
+        a = Article.create(f.id, \
                 entry.title, \
+                'todo',
                 entry.published, \
                 entry.link, \
                 entry.summary, \
                 entry.author)
-        l.append(article)
-
-    l.reverse()
-    for article in l:
+        full_text = decodeHtmlEntity(get_fulltext(a.link))
+        ArticleContent.create(a.id, full_text)
         logger.info(u'article {0} of feed {1} has been added to db'.\
-                format(article.title, f.name))
-        db.session.add(article)
-    
+                format(a.title, f.name))
 
 def work():
     feeds = Feed.get_feeds()
@@ -64,6 +61,7 @@ def work():
     db.session.commit()
 
 def main():
+#    work()
     while True:
         work()
         time.sleep(600)
