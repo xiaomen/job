@@ -61,8 +61,9 @@ def fulltext(aid):
         abort(404)
         
     request_url = request.args.get('request_url', None)
-    url = a.link
-    result = get_fulltext(url)
+    result = get_local_fulltext(aid)
+    if not result:
+        abort(404)
 
     if g.current_user:
         f = get_favorite_to_article(g.current_user.uid, aid)
