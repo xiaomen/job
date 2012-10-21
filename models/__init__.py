@@ -60,7 +60,7 @@ class Article(db.Model):
     @staticmethod
     def get_page(page, per_page, **kw):
         result = Article.query.filter_by(**kw) \
-                .order_by(desc(Article.created)) \
+                .order_by(desc(Article.date)) \
                 .paginate(page, per_page=per_page)
         return result
 

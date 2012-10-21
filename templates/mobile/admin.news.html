@@ -1,0 +1,18 @@
+{% extends "mobile/layout.html" %}
+{% from "macros.html" import render_mobile_pagination %}
+
+{% block content %}
+
+<div class="result">
+	<ul class="job-list">
+
+		{% for job in jobs %}
+		<li class="job">
+		<a href="{{ url_for('admin.admin_news', id=job.id) }}">{{ job.title }}</a>
+		</li>
+		{% endfor %}
+	</ul>
+</div>
+
+{{ render_mobile_pagination(list_page, url_for('admin.admin_feeds', id=fid)) }}
+{% endblock %}

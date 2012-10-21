@@ -13,8 +13,8 @@ from StringIO import StringIO
 
 logger = logging.getLogger(__name__)
 
-def get_local_fulltext(id):
-    content = ArticleContent.query.get(id)
+def get_local_fulltext(aid):
+    content = ArticleContent.query.filter_by(aid=aid).first()
     if not content:
         return None
     return content.fulltext
