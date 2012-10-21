@@ -1,0 +1,14 @@
+{% extends "mobile/layout.html" %}
+
+{% block content %}
+
+<div>
+	<ul>
+		{% for feed in feeds %}
+		<li>
+		<a href="{{ url_for('admin.admin_feeds', id=feed.id) }}">{{ feed.name }}</a>
+		</li>
+		{% endfor %}
+	</ul>
+</div>
+{% endblock %}
