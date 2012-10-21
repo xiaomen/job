@@ -65,15 +65,15 @@ def get_info(s, patterns):
     return None
 
 def get_time_and_place(fulltext):
-    place_patterns = [re.compile(u'>[^<>]*地[址点][：:]([^<>]*)[\s<]', re.U), \
-            re.compile(u'<td[^<>]*>.*地[址点].*</td><td[^<>]*>(?:<[^<>]*>)([^<>]*)(?:<[^<>]*>)</td>', re.U)
+    place_patterns = [re.compile(u'>[^<>]*地[址点][：:](?:<[^<>]*>){,5}([^<>]*)[\s<]', re.U), \
+            re.compile(u'<td[^<>]*>.*地[址点].*</td><td[^<>]*>(?:<[^<>]*>){,5}([^<>]*)(?:<[^<>]*>){,5}</td>', re.U)
     ]
-    time_patterns = [re.compile(u'>[^<>]*时间[：:]([^<>地]*)[\s<]', re.U), \
-            re.compile(u'<td[^<>]*>.*时间[^地]*><td[^<>]*>(?:<[^<>]*>)([^<>地]*)(?:<[^<>]*>)</td>', re.U)
+    time_patterns = [re.compile(u'>[^<>]*时间[：:](?:<[^<>]*>){,5}([^<>地]*)[\s<]', re.U), \
+            re.compile(u'<td[^<>]*>.*时间[^地]*></td><td[^<>]*>(?:<[^<>]*>){,5}([^<>地]*)(?:<[^<>]*>){,5}</td>', re.U)
     ]
 
-    return get_info(fulltext, time_patterns), \
-           get_info(fulltext, place_patterns)
+    return get_info(fulltext[:2000], time_patterns), \
+           get_info(fulltext[:2000], place_patterns)
 
 def decodeHtmlEntity(s) :
     result = s

@@ -46,9 +46,10 @@ def admin_news(id):
 
     a = get_job_by_id(id)
     fulltext = get_local_fulltext(a.id)
-    date, place = get_time_and_place(decodeHtmlEntity(fulltext))
-    form.place.data = place or u''
-    form.date.data = date or u''
+    print fulltext
+    date, place = get_time_and_place(fulltext)
+    form.place.data = (place or u'').strip()
+    form.date.data = (date or u'').strip()
     form.title.data = a.title.split()[-1]
     form.id.label = ''
     form.id.data = id
