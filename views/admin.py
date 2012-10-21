@@ -46,7 +46,6 @@ def admin_news(id):
 
     a = get_job_by_id(id)
     fulltext = get_local_fulltext(a.id)
-    print fulltext
     date, place = get_time_and_place(fulltext)
     form.place.data = (place or u'').strip()
     form.date.data = (date or u'').strip()
