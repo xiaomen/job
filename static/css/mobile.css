@@ -1,7 +1,6 @@
 .query-box {
     padding: 0 20px; 
     margin-top: 20px; 
-    border-bottom: 1px solid #3999CC; 
 	font-size: 14px;
 }
 
@@ -51,12 +50,17 @@
 }
 
 .job {
-	padding-bottom: 10px;
-	margin-bottom: 10px;
+	padding: 5px;
+	border-top: 1px solid #3A9ACD;
 }
 
 .job-list {
 	font-size: 16px;
+}
+
+.job-school {
+	color: darkGray;
+	margin-left: 5px;
 }
 
 a:visited {

@@ -42,6 +42,7 @@ class ArticleForm(Form):
 
 
 @admin.route('/news/<int:id>', methods=['GET', 'POST'])
+@admin_required(need=True, next='http://xiaomen.co/account/register')
 def admin_news(id):
     form = ArticleForm(request.form)
     if request.method == 'POST' and form.validate():
@@ -66,6 +67,7 @@ def admin_news(id):
 
 
 @admin.route('/<int:id>')
+@admin_required(need=True, next='http://xiaomen.co/account/register')
 def admin_feeds(id):
     page = request.args.get('p', '1')
     if not page or not page.isdigit():
@@ -76,6 +78,7 @@ def admin_feeds(id):
             jobs=list_page.items)
 
 @admin.route('/')
+@admin_required(need=True, next='http://xiaomen.co/account/register')
 def index():
     feeds = get_feeds()
 

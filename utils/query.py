@@ -21,6 +21,8 @@ def get_favorite_job_by_user(uid, page):
     page_obj.items = [get_job_by_id(i.aid) for i in page_obj.items]
     return gen_list_page_obj(page_obj)
 
+def get_feed_by_id(fid):
+    return Feed.query.get(fid)
 
 def get_job_by_id(aid):
     return Article.query.get(aid)

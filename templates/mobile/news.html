@@ -29,35 +29,19 @@
 
 <div class="result">
 	<ul class="job-list">
-		{% if not today and not yesterday and not day_before and not day_before_day %}
-		<fieldset>
-			<legend>{{ jobs[0].created.strftime('%Y.%m.%d') }}之前发布</legend>		
-		</fieldset>
-		{% endif %}
 
 		{% for job in jobs %}
-		{% if today == job %}
-		<fieldset>
-			<legend>今日发布</legend>		
-		</fieldset>
-		{% endif %}
-		{% if yesterday == job %}
-		<fieldset>
-			<legend>昨日发布</legend>		
-		</fieldset>
-		{% endif %}
-		{% if day_before == job %}
-		<fieldset>
-			<legend>前日发布</legend>		
-		</fieldset>
-		{% endif %}
-		{% if day_before_day == job %}
-		<fieldset>
-			<legend>{{ job.created.strftime('%Y.%m.%d') }}之前发布</legend>		
-		</fieldset>
-		{% endif %}
 		<li class="job">
-		<a href="{{ url_for('news.fulltext', aid=job.id, request_url=request.url) }}">{{ job.title }}</a>
+		<div class="job-name">
+			<a class="job-title" href="{{ url_for('news.fulltext', aid=job.id, request_url=request.url) }}">{{ job.title }}</a>
+			{% if not feed %}
+			<span class="job-school">{{ job | feed_name }}</span>
+			{% endif %}
+		</div>
+		<div class="job-detail">
+			<p>时间：{{ job.date }}</p>
+			<p>地点：{{ job.place }}</p>
+		</div>
 		</li>
 		{% endfor %}
 	</ul>
@@ -69,3 +53,4 @@
 	{{ render_mobile_pagination(list_page, url_for('news.index')) }}
 {% endif %}
 {% endblock %}
+			<p>{{ job.place }}</p>
