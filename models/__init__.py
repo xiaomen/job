@@ -1,9 +1,13 @@
-from datetime import datetime
+from datetime import datetime, date
 
 from sqlalchemy.sql.expression import desc
 from flask.ext.sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
+
+def get_today():
+    t = date.today()
+    return datetime(t.year, t.month, t.day)
 
 def init_db(app):
     db.init_app(app)
@@ -56,6 +60,14 @@ class Article(db.Model):
         db.session.add(article)
         db.session.commit()
         return article
+
+    @staticmethod
+    def get_query_page(page, per_page, **kw):
+        result = Article.query.filter_by(**kw) \
+                .filter('date>{0}'.format(date.today().isoformat())) \
+                .order_by(Article.date) \
+                .paginate(page, per_page=per_page)
+        return result
 
     @staticmethod
     def get_page(page, per_page, **kw):

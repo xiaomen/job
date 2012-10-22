@@ -4,6 +4,14 @@
 {% block content %}
 
 <div>
+	{% if not is_published %}
+	{% set param = '?is_published=true' %}
+	{% set text = '已发布' %}
+	{% else %}
+	{% set param = '' %}
+	{% set text= '未发布' %}
+	{% endif %}
+	<a style="float:right" href = "{{ request.base_url + param }}">切换到{{ text }}</a>
 	<a href="{{ url_for('admin.index') }}">返回</a>
 </div>
 <div class="result">
@@ -11,6 +19,11 @@
 
 		{% for job in jobs %}
 		<li class="job">
+		<div style="float:right;">
+			<form method="POST" action="{{ url_for("admin.admin_news_delete", id=job.id, url=request.url) }}">
+				<input type="submit" value="Delete">
+			</form>
+		</div>
 		<a href="{{ url_for('admin.admin_news', id=job.id) }}">{{ job.title }}</a>
 		</li>
 		{% endfor %}

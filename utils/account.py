@@ -14,6 +14,7 @@ def login_required(next=None, need=True, *args, **kwargs):
             return f(*args, **kwargs)
         return _
     return _login_required
+
 def admin_required(next=None, need=True, *args, **kwargs):
     def _login_required(f):
         @wraps(f)
