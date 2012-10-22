@@ -64,7 +64,7 @@ class Article(db.Model):
     @staticmethod
     def get_query_page(page, per_page, **kw):
         result = Article.query.filter_by(**kw) \
-                .filter('date>{0}'.format(date.today().isoformat())) \
+                .filter('date>now()') \
                 .order_by(Article.date) \
                 .paginate(page, per_page=per_page)
         return result
