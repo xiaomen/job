@@ -2,6 +2,15 @@
 {% from "form_helper.html" import render_field %}
 
 {% block content %}
+
+<div>
+	<p>支持时间格式：</p>
+	<ul>
+		<li>%Y-%m-%d %H:%M:%s - <font color="green">2012-11-11 11:11:11</font></li>
+		<li>%Y-%m-%d %H:%M - <font color="green">2012-11-11 11:11</font></li>
+		<li>%Y年%m月%d日%H:%M - <font color="green">2012年11月11日 11:11</font></li>
+	</ul>
+</div>
 <form class="admin_form" method="POST">
   <dl>
     {{ render_field(form.id) }}
