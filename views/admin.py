@@ -16,13 +16,23 @@ logger = logging.getLogger(__name__)
 admin = Blueprint('admin', __name__)
 
 def validate_date(form, field):
-    try:
-        datetime.strptime(field.data, TIME_FORMAT)
-    except:
-        raise ValidationError('DateTime Format Illegal')
+    for f in TIME_FORMAT:
+        try:
+            d_str = field.data.replace(u'：', ':')
+            r = datetime.strptime(d_str.encode('utf-8'), f.encode('utf-8'))
+            return True
+        except:
+            continue
+    raise ValidationError('DateTime Format Illegal')
 
 def get_date_from_str(s):
-    return datetime.strptime(s, TIME_FORMAT)
+    for f in TIME_FORMAT:
+        d_str = s.replace(u'：', ':')
+        try:
+            return datetime.strptime(d_str.encode('utf-8'), f.encode('utf-8'))
+        except:
+            continue
+    return None
 
 class ArticleForm(Form):
     id = HiddenField('id')

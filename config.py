@@ -1,3 +1,6 @@
+#!/usr/bin/python
+#coding:utf-8
+
 DEBUG = True
 
 DATABASE_URI = 'mysql://'
@@ -10,4 +13,4 @@ GOOGLE_PASSWD = 'luoruici0930'
 
 PAGE_NUM = 10
 
-TIME_FORMAT = '%Y-%m-%d %H:%M'
+TIME_FORMAT = [u'%Y-%m-%d %H:%M', u'%Y-%m-%d %H:%M:%S', u'%Y年%m月%d日%H:%M', u'%Y年%m月%d日 %H:%M']
