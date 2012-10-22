@@ -57,14 +57,19 @@
 {% endif %}
 {% endmacro %}
 
-{% macro render_mobile_pagination(page, url) %}
+{% macro render_mobile_pagination(page, url, published=False) %}
+{% if published %}
+{% set pub = '&is_published=true' %}
+{% else %}
+{% set pub = '' %}
+{% endif %}
 <div class="pagination">
     {% if page.has_next %}
-    <a href="{{ url }}?p={{ page.page + 1 }}" class="next">下一页</a>
+	<a href="{{ url }}?p={{ page.page + 1 }}{{ pub }}" class="next">下一页</a>
     {% endif %}
 	( {{ page.page }}/{{ page.pages }} )
     {% if page.has_prev %}
-    <a href="{{ url }}?p={{ page.page - 1 }}" class="prev">上一页</a>
+	<a href="{{ url }}?p={{ page.page - 1 }}{{ pub }}" class="prev">上一页</a>
     {% endif %}
     <div class="cleanfix" style="clear: both"></div>
 </div>
