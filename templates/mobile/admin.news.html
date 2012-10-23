@@ -24,7 +24,13 @@
 				<input type="submit" value="Delete">
 			</form>
 		</div>
-		<a href="{{ url_for('admin.admin_news', id=job.id) }}">{{ job.title }}</a>
+		<div>
+			<a href="{{ url_for('admin.admin_news', id=job.id) }}">{{ job.title }}</a>
+		</div>
+		<div class="job-detail">
+			<p>时间：{{ job.date }}</p>
+			<p>地点：{{ job.place }}</p>
+		</div>
 		</li>
 		{% endfor %}
 	</ul>
