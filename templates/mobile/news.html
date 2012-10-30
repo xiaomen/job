@@ -39,7 +39,7 @@
 			{% endif %}
 		</div>
 		<div class="job-detail">
-			<p>时间：{{ job.date }}</p>
+			<p>时间：{{ job.date.strftime('%Y-%m-%d %H:%M') }}</p>
 			<p>地点：{{ job.place }}</p>
 		</div>
 		</li>

@@ -23,7 +23,7 @@ def get_jobs_in_feed(feed_id):
     if not page.isdigit():
         raise abort(404)
 
-    feeds = get_feeds()
+    feeds = get_enabled_feeds()
     if feed_id:
         list_page = get_show_jobs(page, fid=feed_id, is_published=True)
     else:

@@ -19,14 +19,19 @@ class Feed(db.Model):
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(100), nullable=False)
     stream_id = db.Column(db.String(200), nullable=False)
+    enabled = db.Column('enabled', db.Boolean, nullable=False, default=True)
 
     def __init__(self, name, stream_id):
         self.name = name
         self.stream_id = stream_id
 
     @staticmethod
-    def get_feeds():
+    def get_feeds(**kw):
         return Feed.query.all()
+
+    @staticmethod
+    def get_enabled_feeds():
+        return Feed.query.filter_by(enabled=1)
 
 class Article(db.Model):
     __tablename__ = 'article'
@@ -64,7 +69,7 @@ class Article(db.Model):
     @staticmethod
     def get_query_page(page, per_page, **kw):
         result = Article.query.filter_by(**kw) \
-                .filter('date>now()') \
+                .filter('date>now() and fid in (select id from feed where enabled=1)') \
                 .order_by(Article.date) \
                 .paginate(page, per_page=per_page)
         return result

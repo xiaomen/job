@@ -10,6 +10,9 @@ from config import PAGE_NUM
 def get_feeds():
     return Feed.get_feeds()
 
+def get_enabled_feeds():
+    return Feed.get_enabled_feeds()
+
 def get_show_jobs(page, **kw):
     page = int(page)
     page_obj = Article.get_query_page(page, per_page=PAGE_NUM, **kw)
