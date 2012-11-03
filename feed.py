@@ -60,7 +60,10 @@ def process_feed(f):
 def work():
     feeds = Feed.get_feeds()
     for f in feeds:
-        process_feed(f)
+        try:
+            process_feed(f)
+        except:
+            logger.error('errors occurs when process feed %s' % f.name)
     db.session.commit()
 
 def main():
