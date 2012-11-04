@@ -50,7 +50,6 @@ app.wsgi_app = SessionMiddleware(app.wsgi_app, \
         cookie_domain=config.SESSION_COOKIE_DOMAIN)
 
 @app.route('/')
-@check_ua
 def index():
     return redirect(url_for('news.index'))
 
