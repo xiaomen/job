@@ -2,6 +2,7 @@ application: job
 version: 1
 runtime: python
 api_version: 1
+sentry_dsn: http://2dcef4ce306848e3854a79ab4940d117:5da87341a86446fc9f6c7613d8a825e5@deploy.xiaom.co:9000/5
 
 handlers:
 - url: /static/(.*)
