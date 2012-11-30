@@ -10,32 +10,25 @@
 {% set button_display = '加入收藏' %}
 {% endif %}
 
-<div class="favorite-btn">
-	<table>
-		<tr>
-			<td>
-				<form action="{{ url }}" method="post">
-					<input class="link" type="submit" value="{{ button_display }}" />
-				</form>
-			</td>
-			<td>
-				{% if request_url %}
-				<a href="{{ request_url }}">返回</a>
-				{% else %}
-				<a href="/">返回</a>
-				{% endif %}
-			</td>
-		</tr>
-	</table>
-	
-</div>
+<form action="{{ url }}" method="post">
+    <div class="favorite-btn">
+        <button class="btn btn-small" type="submit">{{ button_display }}</button>
+        {% if request_url %}
+        <a class="btn btn-small" href="{{ request_url }}">返回</a>
+        {% else %}
+        <a class="btn btn-small" href="/">返回</a>
+        {% endif %}
+        <div class="clearfix"></div>
+    </div>
+</form>
 
-<div class="result">
-	{{ fulltext | safe }}
+<div class="fulltext-detail">
+    {{ fulltext | safe }}
 </div>
 
 <div class="back-btn">
-	<a href="{{ request_url }}">返回</a>
+    <a href="{{ request_url }}" class="btn btn-small">返回</a>
+    <div class="clearfix"></div>
 </div>
 
 
