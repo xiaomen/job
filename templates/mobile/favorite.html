@@ -2,31 +2,33 @@
 {% from "macros.html" import render_mobile_pagination %}
 
 {% block content %}
-
-<div class="result-title">
-	<table>
-		<tr>
-			<td>
-				<h2>我的收藏</h2>
-			</td>
-			<td>
-				<a href="/">返回首页</a>
-			</td>
-		</tr>
-	</table>
+<div class="page-title">
+    <h2>我的收藏</h2>
 </div>
-
 <div class="result">
 	<ul class="job-list">
-	{% for job in jobs %}
-	<li class="job"><a href="{{ url_for('news.fulltext', aid=job.id, request_url=request.url) }}">{{ job.title }}</a></li>
-	{% endfor %}
+		{% for job in jobs %}
+        <li class="job {% if loop.last %}last{% endif %} {% if now > job.date %}outdated{% endif %}">
+		<div class="job-name">
+			<a class="job-title" href="{{ url_for('news.fulltext', aid=job.id, request_url=request.url) }}">{{ job.title }}</a>
+            {% if now > job.date %}<span class="outdate">已过期</span>{% endif %}
+			{% if not feed %}
+			<span class="job-school">{{ job | feed_name }}</span>
+			{% endif %}
+		</div>
+		<div class="job-detail">
+            <p><span class="detail-title">时间：</span>{{ job.date.strftime('%Y-%m-%d %H:%M') }}</p>
+            <p><span class="detail-title">地点：</span>{{ job.place }}</p>
+		</div>
+		</li>
+		{% endfor %}
 	</ul>
 </div>
 
 {{ render_mobile_pagination(list_page, url_for('news.get_favorite_by_user')) }}
 
 <div class="back-btn">
-	<a href="/">返回首页</a>
+    <a href="/" class="btn btn-small">返回首页</a>
+    <div class="clearfix"></div>
 </div>
 {% endblock %}

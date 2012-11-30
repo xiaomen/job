@@ -1,205 +1,171 @@
-.query-box {
-    padding: 0 20px; 
-    margin-top: 20px; 
-	font-size: 14px;
+.select-box {
+    text-align: center; 
 }
 
-.query-title {
-    float: left; 
-    padding: 10px 0; 
-}
-
-.query-select {
-    margin-left: 50px; 
-}
-
-.query-select ul {
+.select-box .box-title, .select-box .box-options {
     display: inline-block; 
+}
+
+.select-box .box-title {
+    color: #777; 
+}
+
+.select-box .box-options ul {
     margin: 0; 
     padding: 0; 
 }
 
-.query-select ul li {
-    display: inline; 
-    list-style: none; 
-}
-
-.query-select ul li:after {
-    content: "|"; 
-}
-
-.query-select ul li:last-child:after {
-    content: ""; 
-    color: #777; 
-}
-
-.query-select ul li a {
-    text-decoration: none; 
-    margin: 10px; 
+.select-box .box-options li {
     display: inline-block; 
-    color: #777; 
+    padding: 0 10px; 
+    margin: 5px 0; 
+    border-right: 1px solid #999; 
 }
 
-.query-select ul li.active a {
+.select-box .box-options li a {
+    color: #777; 
+    text-decoration: none; 
+}
+
+.select-box .box-options li.last {
+    border-right: none; 
+}
+
+.select-box .box-options li.active a {
     color: #3999CC; 
-}
-
-.query-line {
-    margin: 20px 0; 
-    color: #777; 
-}
-
-.job {
-	padding: 5px;
-	border-top: 1px solid #3A9ACD;
-}
-
-.job-list {
-	font-size: 16px;
-}
-
-.job-school {
-	color: darkGray;
-	margin-left: 5px;
-}
-
-a:visited {
-	color: #3999CC;
-}
-
-a {
-	color: #3999CC;
-	text-decoration: none;
 }
 
 .result {
-    margin: 0 5px; 
+    border-top: 2px solid #3999CC; 
+    border-bottom: 2px solid #3999CC; 
+    margin: 0 10px; 
 }
 
-.result ul {
-	list-style: none;
-	padding: 0;
-}
-.result-title {
-    text-align: center; 
-    color: #3999CC; 
-    margin: 10px 0; 
-}
-
-.result-title h2 {
-    font-weight: normal; 
-    font-size: 18px; 
-    letter-spacing: 0.2em; 
-}
-
-.result-list ul {
+.result .job-list {
     margin: 0; 
     padding: 0; 
+    list-style: none; 
 }
 
-.result-list ul li {
-    float: left;
-    list-style: none;
+.result .job-list .job {
+    padding: 10px; 
+    border-bottom: 1px solid #3999CC; 
+    font-size: 14px; 
 }
 
-.result-list ul li a {
-    margin: 5px; 
-    margin-left: 0; 
-    display: inline-block; 
+.result .job-list .job.last {
+    border-bottom: none; 
+}
+
+.result .job-list .job.outdated {
+    background-color: #F6F6F6; 
+}
+
+.job .job-name .job-title {
     text-decoration: none; 
     color: #3999CC; 
 }
 
-.classroom-list ul {
+.job .job-name .outdate {
+    color: #666; 
+}
+
+.job .job-name .job-school {
+    float: right; 
+    color: #777; 
+}
+
+.job .job-detail {
+    margin: 5px 0; 
+    font-size: 13px; 
+}
+
+.job .job-detail .detail-title {
+    color: #777; 
+}
+
+.btn {
+    display: block; 
+    padding: 15px 30px;
+    line-height: 17px; 
+    text-decoration: none; 
+    color: white; 
+    background-color: #3999CC; 
+    border: none;
+    outline: none; 
+}
+
+.btn.btn-small {
+    padding: 10px 20px; 
+}
+
+.btn:visited {
+    color: white; 
+}
+
+.pagination {
+    margin: 10px; 
     text-align: center; 
+    line-height: 48px; 
 }
 
-.result-meta h3 {
-    font-weight: normal; 
-    font-size: 12px; 
-    -webkit-text-size-adjust: 100%; 
+.pagination a {
+    padding: 15px 30px;
+    line-height: 17px; 
+    text-decoration: none; 
+    color: white; 
+    background-color: #3999CC; 
 }
 
-.result-meta .building {
-    color: #3999CC; 
+.pagination .next {
+    float: right; 
 }
 
-.classroom-list {
-    margin: 10px 0; 
-}
-
-.classroom-list li span {
-    margin-right: 10px; 
-    display: inline-block; 
+.pagination .prev {
+    float: left; 
 }
 
 .favorite-btn {
-	font-size: 14px;
+    margin: 10px 0; 
 }
 
-.favorite-btn table {
-	width: 100%;
-	margin: 10px 0 10px 0;
+.favorite-btn .btn {
+    float: right; 
+    margin-right: 10px; 
 }
 
-.favorite-btn td{
-	width: 50%;
+.fulltext-detail {
+    border-top: 1px solid #3999CC; 
+    border-bottom: 1px solid #3999CC; 
+    padding: 10px 0; 
+    margin: 0 10px; 
 }
 
-.favorite-btn a {
-    text-decoration: none; 
-    color: #3999CC; 
-	float: right;
+.fulltext-detail {
+    font-size: 13px !important; 
 }
 
-.result-title table td a {
-    text-decoration: none; 
-    color: #3999CC; 
-	float: right;
-}
-
-.result-title td { 
-	width: 50%;
-}
-
-.result-title table {
-	width: 100%;
-	margin: 10px 0 10px 0;
+.fulltext-detail font {
+    font-size: 13px !important; 
 }
 
 .back-btn {
-	text-align: right;
+    margin: 10px; 
 }
 
-.back-btn a {
-    text-decoration: none; 
+.back-btn .btn {
+    float: right; 
+}
+
+.school-list {
+    margin: 20px 0; 
+}
+
+.page-title {
+    margin: 10px; 
     color: #3999CC; 
 }
 
-input.link {
-	background: none;
-	margin: 0;
-	padding: 0;
-	border: none;
-	cursor: pointer;
-    text-decoration: none; 
-    color: #3999CC; 
-}
-
-.next {
-	margin-right: 10px;
-}
-
-.prev {
-	margin-left: 10px;
-}
-
-.result fieldset {
-	border: none;
-	border-top: 1px solid #3999CC;
-}
-
-.result legend {
-	text-align: center;
-	margin: 3px;
+.page-title h2 {
+    font-weight: normal; 
 }

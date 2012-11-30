@@ -2,6 +2,7 @@ import json
 import logging
 
 from datetime import date
+from datetime import datetime
 from datetime import timedelta
 
 from flask import Blueprint, request, abort, \
@@ -43,7 +44,7 @@ def get_favorite_by_user():
     list_page = get_favorite_job_by_user(g.current_user.uid, page)
 
     return render_template('favorite.html', list_page = list_page, \
-            jobs = list_page.items)
+            jobs = list_page.items, now = datetime.now())
 
 @news.route('/fulltext/<int:aid>', methods=['GET'])
 def fulltext(aid):
