@@ -3,35 +3,31 @@
 
 {% block content %}
 
-<div class="query-box">
-    <div class="query-line">
-        <div class="query-title">
-            <span>学校: </span>
-        </div>
-        <div class="query-select">
-            <ul>
-				{% if not feed_id %}
-				<li class="active"><a href="#">全部</a></li>
-				{% else %}
-				<li><a href="/news">全部</a></li>
-				{% endif %}
-                {% for f in feeds %}
-                {% if feed_id == f.id %}
-                <li class="active"><a href="#">{{ f.name }}</a></li>
-                {% else %}
-				<li><a href="/news/{{ f.id }}">{{ f.name }}</a></li>
-                {% endif %}
-                {% endfor %}
-            </ul>
-        </div>
+<div class="select-box school-list">
+    <div class="box-title">
+        <span>学校: </span>
+    </div>
+    <div class="box-options">
+        <ul>
+			{% if not feed_id %}
+			<li class="active"><a href="#">全部</a></li>
+			{% else %}
+			<li><a href="/news">全部</a></li>
+			{% endif %}
+            {% for f in feeds %}
+            {% if feed_id == f.id %}
+            <li class="active {% if loop.last %}last{% endif %}"><a href="#">{{ f.name }}</a></li>
+            {% else %}
+			<li {% if loop.last %}class="last"{% endif %}><a href="/news/{{ f.id }}">{{ f.name }}</a></li>
+            {% endif %}
+            {% endfor %}
+        </ul>
     </div>
 </div>
-
 <div class="result">
 	<ul class="job-list">
-
 		{% for job in jobs %}
-		<li class="job">
+        <li class="job {% if loop.last %}last{% endif %}">
 		<div class="job-name">
 			<a class="job-title" href="{{ url_for('news.fulltext', aid=job.id, request_url=request.url) }}">{{ job.title }}</a>
 			{% if not feed %}
@@ -39,8 +35,8 @@
 			{% endif %}
 		</div>
 		<div class="job-detail">
-			<p>时间：{{ job.date.strftime('%Y-%m-%d %H:%M') }}</p>
-			<p>地点：{{ job.place }}</p>
+            <p><span class="detail-title">时间：</span>{{ job.date.strftime('%Y-%m-%d %H:%M') }}</p>
+            <p><span class="detail-title">地点：</span>{{ job.place }}</p>
 		</div>
 		</li>
 		{% endfor %}
@@ -53,4 +49,3 @@
 	{{ render_mobile_pagination(list_page, url_for('news.index')) }}
 {% endif %}
 {% endblock %}
-			<p>{{ job.place }}</p>
