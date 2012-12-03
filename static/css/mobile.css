@@ -1,38 +1,50 @@
 .select-box {
-    text-align: center; 
+    padding: 0 20px; 
+    margin-top: 20px; 
 }
 
-.select-box .box-title, .select-box .box-options {
-    display: inline-block; 
-}
-
-.select-box .box-title {
+.select-box .select-line {
+    margin: 20px 0; 
     color: #777; 
 }
 
-.select-box .box-options ul {
+.select-line .line-title {
+    float: left; 
+    padding: 10px 0; 
+}
+
+.select-line .line-options {
+    margin-left: 50px; 
+}
+
+.select-line .line-options ul {
+    display: inline-block; 
     margin: 0; 
     padding: 0; 
 }
 
-.select-box .box-options li {
-    display: inline-block; 
-    padding: 0 10px; 
-    margin: 5px 0; 
-    border-right: 1px solid #999; 
+.select-line .line-options ul li {
+    display: inline; 
+    list-style: none; 
 }
 
-.select-box .box-options li a {
+.select-line .line-options ul li a {
+    display: inline-block; 
+    margin: 10px; 
     color: #777; 
     text-decoration: none; 
 }
 
-.select-box .box-options li.last {
-    border-right: none; 
+.select-line .line-options ul li.active a {
+    color: #3999CC; 
 }
 
-.select-box .box-options li.active a {
-    color: #3999CC; 
+.select-line .line-options ul li:after {
+    content: "|"; 
+}
+
+.select-line .line-options ul li.last:after {
+    content: ""; 
 }
 
 .result {
