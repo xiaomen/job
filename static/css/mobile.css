@@ -1,0 +1,28 @@
+.result {
+	margin: 0 10px;
+}
+
+.job-list .job:first-child {
+	border-top: 1px solid #3999CC;
+}
+
+.job-list .job {
+	border-bottom: 1px solid #3999CC;
+	padding: 10px;
+}
+
+.job-list .job p {
+	margin: 0;
+}
+
+.job .job-detail {
+	margin: 5px 0;
+}
+
+.btn-group .btn {
+	margin: 5px;
+}
+
+.favorite-title {
+	border-bottom: none;
+}

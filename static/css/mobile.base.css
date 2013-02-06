@@ -283,3 +283,55 @@ ul.inline-list li {
     clear: both; 
     zoom: 0; 
 }
+
+/* Select Box */
+
+.select-box {
+    padding: 0 20px; 
+    margin-top: 20px; 
+}
+
+.select-box .select-line {
+    margin: 20px 0; 
+    color: #777; 
+}
+
+.select-line .line-title {
+    float: left; 
+    padding: 10px 0; 
+}
+
+.select-line .line-options {
+    margin-left: 50px; 
+}
+
+.select-line .line-options ul {
+    display: inline-block; 
+    margin: 0; 
+    padding: 0; 
+}
+
+.select-line .line-options ul li {
+    display: inline; 
+    list-style: none; 
+}
+
+.select-line .line-options ul li a {
+    display: inline-block; 
+    margin: 10px; 
+    color: #777; 
+    text-decoration: none; 
+}
+
+.select-line .line-options ul li.active a {
+    color: #3999CC; 
+}
+
+.select-line .line-options ul li:after {
+    content: "|"; 
+}
+
+.select-line .line-options ul li.last:after {
+    content: ""; 
+}
+
