@@ -24,7 +24,7 @@ def admin_required(next=None, need=True, *args, **kwargs):
                 if next:
                     return redirect(next)
                 return redirect('/')
-            if not g.current_user.name in admins:
+            if not g.current_user.domain in admins:
                 abort(403)
             return f(*args, **kwargs)
         return _
