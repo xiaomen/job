@@ -12,4 +12,4 @@ PAGE_NUM = 10
 
 TIME_FORMAT = [u'%Y-%m-%d %H:%M', u'%Y-%m-%d %H:%M:%S', u'%Y年%m月%d日%H:%M', u'%Y年%m月%d日 %H:%M']
 
-admins = ['luoruici', 'aixiaowan', 'hnubbs', 'test']
+admins = ['luoruici', 'aixiaowan', 'hnubbs']
