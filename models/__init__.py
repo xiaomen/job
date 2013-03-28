@@ -75,6 +75,16 @@ class Article(db.Model):
         return result
 
     @staticmethod
+    def get_query_page_without_intern(page, per_page, **kw):
+        result = Article.query.filter_by(**kw) \
+                .filter('fid<>1 and date>now() and fid in (select id from feed where enabled=1)') \
+                .order_by(Article.date) \
+                .paginate(page, per_page=per_page)
+        return result
+
+        
+
+    @staticmethod
     def get_page(page, per_page, **kw):
         result = Article.query.filter_by(**kw) \
                 .order_by(desc(Article.date)) \

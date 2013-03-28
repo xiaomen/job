@@ -13,6 +13,11 @@ def get_feeds():
 def get_enabled_feeds():
     return Feed.get_enabled_feeds()
 
+def get_all_jobs(page, **kw):
+    page = int(page)
+    page_obj = Article.get_query_page_without_intern(page, per_page=PAGE_NUM, **kw)
+    return gen_list_page_obj(page_obj)
+
 def get_show_jobs(page, **kw):
     page = int(page)
     page_obj = Article.get_query_page(page, per_page=PAGE_NUM, **kw)
