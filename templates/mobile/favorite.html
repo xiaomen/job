@@ -1,8 +1,10 @@
 {% extends "mobile/layout.html" %}
 {% from "macros.html" import render_mobile_pagination %}
 
+{% block subtitle %}找工作{% endblock %}
+
 {% block content %}
-<div class="page-title">
+<div class="title title-center favorite-title">
     <h2>我的收藏</h2>
 </div>
 <div class="result">
@@ -13,12 +15,12 @@
 			<a class="job-title" href="{{ url_for('news.fulltext', aid=job.id, request_url=request.url) }}">{{ job.title }}</a>
             {% if now > job.date %}<span class="outdate">已过期</span>{% endif %}
 			{% if not feed %}
-			<span class="job-school">{{ job | feed_name }}</span>
+			<span class="job-school r gray">{{ job | feed_name }}</span>
 			{% endif %}
 		</div>
 		<div class="job-detail">
-            <p><span class="detail-title">时间：</span>{{ job.date.strftime('%Y-%m-%d %H:%M') }}</p>
-            <p><span class="detail-title">地点：</span>{{ job.place }}</p>
+            <p><span class="detail-title gray">时间：</span>{{ job.date.strftime('%Y-%m-%d %H:%M') }}</p>
+            <p><span class="detail-title gray">地点：</span>{{ job.place }}</p>
 		</div>
 		</li>
 		{% endfor %}
@@ -28,7 +30,7 @@
 {{ render_mobile_pagination(list_page, url_for('news.get_favorite_by_user')) }}
 
 <div class="back-btn">
-    <a href="/" class="btn btn-small">返回首页</a>
+    <a href="/" class="btn btn-small r">返回首页</a>
     <div class="clearfix"></div>
 </div>
 {% endblock %}

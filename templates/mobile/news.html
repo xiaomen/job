@@ -1,6 +1,8 @@
 {% extends "mobile/layout.html" %}
 {% from "macros.html" import render_mobile_pagination %}
 
+{% block subtitle %}找工作{% endblock %}
+
 {% block content %}
 <div class="select-box">
     <div class="select-line school-list">
@@ -14,13 +16,25 @@
                 {% else %}
                 <li><a href="/news">全部</a></li>
                 {% endif %}
-                {% for f in feeds %}
+                {% for f in feeds if f.id != 1 %}
                 {% if feed_id == f.id %}
                 <li class="active {% if loop.last %}last{% endif %}"><a href="#">{{ f.name }}</a></li>
                 {% else %}
                 <li {% if loop.last %}class="last"{% endif %}><a href="/news/{{ f.id }}">{{ f.name }}</a></li>
                 {% endif %}
+
                 {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="select-line school-list">
+        <div class="line-title">
+            <span>类型：</span>
+        </div>
+        <div class="line-options">
+            <ul>
+                <li {% if feed_id != 1 %}class="active"{% endif %}><a href="/news/">工作信息</a></li>
+                <li class="last {% if feed_id == 1 %}active{% endif %}"><a href="/news/1">实习信息</a></li>
             </ul>
         </div>
     </div>
@@ -32,18 +46,17 @@
 		<div class="job-name">
 			<a class="job-title" href="{{ url_for('news.fulltext', aid=job.id, request_url=request.url) }}">{{ job.title }}</a>
 			{% if not feed %}
-			<span class="job-school">{{ job | feed_name }}</span>
+			<span class="job-school r gray">{{ job | feed_name }}</span>
 			{% endif %}
 		</div>
 		<div class="job-detail">
-            <p><span class="detail-title">时间：</span>{{ job.date.strftime('%Y-%m-%d %H:%M') }}</p>
-            <p><span class="detail-title">地点：</span>{{ job.place }}</p>
+            <p><span class="detail-title gray">时间：</span>{{ job.date.strftime('%Y-%m-%d %H:%M') }}</p>
+            <p><span class="detail-title gray">地点：</span>{{ job.place }}</p>
 		</div>
 		</li>
 		{% endfor %}
 	</ul>
 </div>
-
 {% if feed_id %}
 	{{ render_mobile_pagination(list_page, url_for('news.get_jobs_in_feed', feed_id=feed_id)) }}
 {% else %}

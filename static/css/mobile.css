@@ -1,183 +1,40 @@
-.select-box {
-    padding: 0 20px; 
-    margin-top: 20px; 
-}
-
-.select-box .select-line {
-    margin: 20px 0; 
-    color: #777; 
-}
-
-.select-line .line-title {
-    float: left; 
-    padding: 10px 0; 
-}
-
-.select-line .line-options {
-    margin-left: 50px; 
-}
-
-.select-line .line-options ul {
-    display: inline-block; 
-    margin: 0; 
-    padding: 0; 
-}
-
-.select-line .line-options ul li {
-    display: inline; 
-    list-style: none; 
-}
-
-.select-line .line-options ul li a {
-    display: inline-block; 
-    margin: 10px; 
-    color: #777; 
-    text-decoration: none; 
-}
-
-.select-line .line-options ul li.active a {
-    color: #3999CC; 
-}
-
-.select-line .line-options ul li:after {
-    content: "|"; 
-}
-
-.select-line .line-options ul li.last:after {
-    content: ""; 
-}
-
 .result {
-    border-top: 2px solid #3999CC; 
-    border-bottom: 2px solid #3999CC; 
-    margin: 0 10px; 
+	margin: 0 10px;
 }
 
-.result .job-list {
-    margin: 0; 
-    padding: 0; 
-    list-style: none; 
+.job-list .job:first-child {
+	border-top: 1px solid #3999CC;
 }
 
-.result .job-list .job {
-    padding: 10px; 
-    border-bottom: 1px solid #3999CC; 
-    font-size: 14px; 
+.job-list .job {
+	border-bottom: 1px solid #3999CC;
+	padding: 10px;
 }
 
-.result .job-list .job.last {
-    border-bottom: none; 
-}
-
-.result .job-list .job.outdated {
-    background-color: #F6F6F6; 
-}
-
-.job .job-name .job-title {
-    text-decoration: none; 
-    color: #3999CC; 
-}
-
-.job .job-name .outdate {
-    color: #666; 
-}
-
-.job .job-name .job-school {
-    float: right; 
-    color: #777; 
+.job-list .job p {
+	margin: 0;
 }
 
 .job .job-detail {
-    margin: 5px 0; 
-    font-size: 13px; 
+	margin: 5px 0;
 }
 
-.job .job-detail .detail-title {
-    color: #777; 
+.btn-group .btn {
+	margin: 5px;
 }
 
-.btn {
-    display: block; 
-    padding: 15px 30px;
-    line-height: 17px; 
-    text-decoration: none; 
-    color: white; 
-    background-color: #3999CC; 
-    border: none;
-    outline: none; 
-}
-
-.btn.btn-small {
-    padding: 10px 20px; 
-}
-
-.btn:visited {
-    color: white; 
-}
-
-.pagination {
-    margin: 10px; 
-    text-align: center; 
-    line-height: 48px; 
-}
-
-.pagination a {
-    padding: 15px 30px;
-    line-height: 17px; 
-    text-decoration: none; 
-    color: white; 
-    background-color: #3999CC; 
-}
-
-.pagination .next {
-    float: right; 
-}
-
-.pagination .prev {
-    float: left; 
-}
-
-.favorite-btn {
-    margin: 10px 0; 
-}
-
-.favorite-btn .btn {
-    float: right; 
-    margin-right: 10px; 
+.favorite-title {
+	border-bottom: none;
 }
 
 .fulltext-detail {
-    border-top: 1px solid #3999CC; 
-    border-bottom: 1px solid #3999CC; 
-    padding: 10px 0; 
-    margin: 0 10px; 
+    border-top: 1px solid #3999CC;
+    border-bottom: 1px solid #3999CC;
+    padding: 10px 0;
+    margin: 0 10px;
+    font-size: 13px !important;
 }
 
-.fulltext-detail {
-    font-size: 13px !important; 
-}
-
-.fulltext-detail font {
-    font-size: 13px !important; 
-}
-
-.back-btn {
-    margin: 10px; 
-}
-
-.back-btn .btn {
-    float: right; 
-}
-
-.school-list {
-    margin: 20px 0; 
-}
-
-.page-title {
-    margin: 10px; 
-    color: #3999CC; 
-}
-
-.page-title h2 {
-    font-weight: normal; 
+.fulltext-btn-group {
+    padding: 10px; 
 }

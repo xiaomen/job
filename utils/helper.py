@@ -6,6 +6,7 @@ class Obj(object):pass
 def gen_list_page_obj(page_obj):
     if not page_obj:
         return None
+    print page_obj.items
     list_page = Obj()
     list_page.items = page_obj.items
     list_page.has_next = page_obj.has_next
