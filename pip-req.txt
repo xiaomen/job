@@ -5,7 +5,7 @@ Jinja2==2.6
 SQLAlchemy==0.7.9
 WTForms==1.0.2
 Werkzeug==0.8.3
-distribute==0.6.30
+distribute==0.6.31
 feedparser==5.1.2
 lxml==2.3.5
 wsgiref==0.1.2
