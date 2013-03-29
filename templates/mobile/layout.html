@@ -70,8 +70,7 @@ var parseURL = function(href) {
     return l; 
 }
 var parent_url = parseURL((window.location != window.parent.location) ? document.referrer: document.location); 
-console.log(parent_url.host.slice(-14)); 
-if(parent_url.host && parent_url.host.slice(-14) == 'www.hnubbs.com') {
+if(parent_url.host && parent_url.host.slice(-10) == 'hnubbs.com') {
     var cssElement = document.createElement("link"); 
     cssElement.href = "/static/css/iframe.css"; 
     cssElement.rel = "stylesheet"; 
