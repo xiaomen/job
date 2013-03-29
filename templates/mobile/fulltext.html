@@ -13,12 +13,12 @@
 {% endif %}
 
 <form action="{{ url }}" method="post">
-    <div class="btn-group">
-        <button class="btn btn-small r" type="submit">{{ button_display }}</button>
+    <div class="btn-group fulltext-btn-group">
+        <button class="btn r" type="submit">{{ button_display }}</button>
         {% if request_url %}
-        <a class="btn btn-small r" href="{{ request_url }}">返回</a>
+        <a class="btn r" href="{{ request_url }}">返回</a>
         {% else %}
-        <a class="btn btn-small r" href="/">返回</a>
+        <a class="btn r" href="/">返回</a>
         {% endif %}
         <div class="clearfix"></div>
     </div>
@@ -28,8 +28,8 @@
     {{ fulltext | safe }}
 </div>
 
-<div class="btn-group">
-    <a href="{{ request_url }}" class="btn btn-small r">返回</a>
+<div class="btn-group fulltext-btn-group">
+    <a href="{{ request_url }}" class="btn r">返回</a>
     <div class="clearfix"></div>
 </div>
 
