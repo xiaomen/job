@@ -8,6 +8,29 @@
     <link rel="stylesheet" href="{{'/static/css/reset.css' | s_files }}" />
     <link rel="stylesheet" href="{{ '/static/css/mobile.base.css' | s_files }}" type="text/css" />
     <link rel="stylesheet" href="{{ '/static/css/mobile.css' | s_files }}" type="text/css" />
+    <script type="text/javascript" src="{{ '/static/js/porthole.min.js' | s_files }}"></script>
+    <script type="text/javascript">
+        var windowProxy; 
+        function getDocHeight() {
+            var D = document;
+            return Math.max(
+                Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
+                Math.max(D.body.offsetHeight, D.documentElement.offsetHeight),
+                Math.max(D.body.clientHeight, D.documentElement.clientHeight)
+            );
+        }
+        window.onload = function() {
+            windowProxy = new Porthole.WindowProxy("http://job.xiaomen.co/proxy.html"); 
+            if(window != window.top) {
+                var cssEle = document.createElement("link"); 
+                cssEle.rel = "stylesheet"; 
+                cssEle.type = "text/css"; 
+                cssEle.href = "{{ '/static/css/iframe.css' | s_files }}"; 
+                document.body.appendChild(cssEle); 
+                windowProxy.post(getDocHeight()); 
+            }
+        }
+    </script>
 </head>
 <body>
 <div class="topbar">
@@ -63,14 +86,5 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-if(window != window.top) {
-    var cssEle = document.createElement("link"); 
-    cssEle.rel = "stylesheet"; 
-    cssEle.type = "text/css"; 
-    cssEle.href = "{{ '/static/css/iframe.css' | s_files }}"; 
-    document.body.appendChild(cssEle); 
-}
-</script>
 </body>
 </html>
