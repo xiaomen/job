@@ -64,18 +64,12 @@
     </div>
 </div>
 <script type="text/javascript">
-var parseURL = function(href) {
-    var l = document.createElement("a");
-    l.href = href;
-    return l; 
-}
-var parent_url = parseURL((window.location != window.parent.location) ? document.referrer: document.location); 
-if(parent_url.host && parent_url.host.slice(-10) == 'hnubbs.com') {
-    var cssElement = document.createElement("link"); 
-    cssElement.href = "/static/css/iframe.css"; 
-    cssElement.rel = "stylesheet"; 
-    cssElement.type = "text/css"; 
-    document.body.appendChild(cssElement); 
+if(window != window.top) {
+    var cssEle = document.createElement("link"); 
+    cssEle.rel = "stylesheet"; 
+    cssEle.type = "text/css"; 
+    cssEle.href = "{{ '/static/css/iframe.css' | s_files }}"; 
+    document.body.appendChild(cssEle); 
 }
 </script>
 </body>
