@@ -53,6 +53,20 @@ app.wsgi_app = SessionMiddleware(app.wsgi_app, \
 def index():
     return redirect(url_for('news.index'))
 
+@app.route('proxy.html')
+def crossdomain_proxy():
+    return """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<script type="text/javascript" src="%s"></script>
+		<script type="text/javascript">
+			window.onload=function(){ Porthole.WindowProxyDispatcher.start(); };
+		</script>
+	</head>
+	<body>
+	</body>
+</html>""" % static_files("/static/js/porthole.min.js")
+
 @app.before_request
 def before_request():
     g.session = request.environ['xiaomen.session']
