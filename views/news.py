@@ -69,7 +69,7 @@ def fulltext(aid):
             request_url=request_url)
 
 @news.route('/fulltext/<int:aid>', methods=['POST'])
-@login_required(need=True, next='http://xiaomen.co/account/register')
+@login_required(need=True, next='http://xiaomen.co/account/login/')
 def favorite(aid):
     a = get_job_by_id(aid)
     action = request.args.get('action', None)
