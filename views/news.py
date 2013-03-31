@@ -36,7 +36,7 @@ def get_jobs_in_feed(feed_id):
             feeds=feeds)
 
 @news.route('/favorite', methods=['GET'])
-@login_required(need=True, next='http://xiaomen.co/account/register')
+@login_required(need=True, next='http://xiaomen.co/account/login/')
 def get_favorite_by_user():
     page = request.args.get('p', '1')
     if not page.isdigit():
