@@ -14,12 +14,7 @@
         var windowProxy; 
         window.onload = function() {
             if(window != window.top) {
-                var cssEle = document.createElement("link"); 
                 windowProxy = new Porthole.WindowProxy("http://job.xiaomen.co/proxy.html"); 
-                cssEle.rel = "stylesheet"; 
-                cssEle.type = "text/css"; 
-                cssEle.href = "{{ '/static/css/iframe.css' | s_files }}"; 
-                document.body.appendChild(cssEle); 
                 windowProxy.post(10); 
                 setTimeout(function() {
                     windowProxy.post($(document).height()); 
