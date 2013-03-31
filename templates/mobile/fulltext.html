@@ -12,7 +12,7 @@
 {% set button_display = '加入收藏' %}
 {% endif %}
 
-<form action="{{ url }}" method="post">
+<form action="{{ url }}" method="post" id="add-favorite">
     <div class="btn-group fulltext-btn-group">
         <button class="btn r" type="submit">{{ button_display }}</button>
         {% if request_url %}
@@ -32,6 +32,19 @@
     <a href="{{ request_url }}" class="btn r">返回</a>
     <div class="clearfix"></div>
 </div>
-
-
+{% if not g.current_user %}
+<script type="text/javascript">
+var addNewTab = function() {
+    if(window != window.top) {
+        var add_favorite = $("#add-favorite"); 
+        add_favorite.attr('target', '_blank'); 
+    }
+}
+if(window.addEventListener) {
+    window.addEventListener('load', addNewTab, false); 
+}else if(window.attachEvent) {
+    window.attachEvent('onload', addNewTab); 
+}
+</script>
+{% endif %}
 {% endblock %}

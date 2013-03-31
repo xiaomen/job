@@ -12,7 +12,7 @@
     <script type="text/javascript" src="{{ '/static/js/jquery-1.7.2.min.js' | s_files }}"></script>
     <script type="text/javascript">
         var windowProxy; 
-        window.onload = function() {
+        var initProxy = function() {
             if(window != window.top) {
                 windowProxy = new Porthole.WindowProxy("http://job.xiaomen.co/proxy.html"); 
                 windowProxy.post(10); 
@@ -20,6 +20,11 @@
                     windowProxy.post($(document).height()); 
                 }, 100); 
             }
+        }
+        if(window.addEventListener) {
+            window.addEventListener('load', initProxy, false); 
+        }else if(window.attachEvent) {
+            window.attachEvent('onload', initProxy); 
         }
     </script>
 </head>
