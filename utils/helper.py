@@ -1,12 +1,15 @@
 #!/usr/bin/python
-#coding:utf-8
+# coding:utf-8
 
-class Obj(object):pass
 
+class Obj(object):
+    pass
+
+# TODO 新的paginator
+# 这个有bug好么
 def gen_list_page_obj(page_obj):
     if not page_obj:
         return None
-    print page_obj.items
     list_page = Obj()
     list_page.items = page_obj.items
     list_page.has_next = page_obj.has_next
