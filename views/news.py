@@ -20,8 +20,7 @@ def index():
 @news.route('/<int:feed_id>')
 def get_jobs_in_feed(feed_id):
     page = request.args.get('p', '1')
-    if not page.isdigit():
-        raise abort(404)
+    page = page.isdigit() and int(page) or 1
 
     feeds = get_enabled_feeds()
     if feed_id:

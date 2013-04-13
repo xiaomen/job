@@ -3,6 +3,8 @@ from datetime import datetime, date
 from sqlalchemy.sql.expression import desc
 from flask.ext.sqlalchemy import SQLAlchemy
 
+from config import DOMAIN
+
 db = SQLAlchemy()
 
 def get_today():
@@ -48,7 +50,7 @@ class Article(db.Model):
     is_published = db.Column(db.Boolean, default=False)
     created = db.Column(db.DateTime, default=datetime.now)
 
-    def __init__(self, fid, title, place, \
+    def __init__(self, fid, title, place, 
             pubdate, link, description, author):
         self.fid = fid
         self.title = title
@@ -57,6 +59,10 @@ class Article(db.Model):
         self.link = link
         self.description = description
         self.author = author
+
+    @property
+    def url(self):
+        return '%s/news/fulltext/%s' % (DOMAIN, self.id)
 
     @staticmethod
     def create(fid, title, place, pubdate, link, description, author):
