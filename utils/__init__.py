@@ -14,9 +14,13 @@ from helper import *
 from fulltext import *
 
 json_encoder = json.JSONEncoder()
+json_decoder = json.JSONDecoder()
 
 def encode(s):
     return json_encoder.encode(s)
+
+def decode(s):
+    return json_decoder.decode(s)
 
 def jsonize(f):
     @wraps(f)
