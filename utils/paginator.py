@@ -18,5 +18,5 @@ class Paginator(object):
             self.iter_pages = None
 
 
-def gen_list_page_obj(page_obj):
+def gen_list_paginator(page_obj):
     return Paginator(page_obj)

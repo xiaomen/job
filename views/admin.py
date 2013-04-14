@@ -8,6 +8,7 @@ from wtforms import Form, TextField, DateTimeField, HiddenField, validators
 from wtforms.validators import ValidationError
 
 from models import *
+from models.article import get_article
 from utils import *
 from config import TIME_FORMAT
 
@@ -55,7 +56,7 @@ def admin_news_delete(id):
 def admin_news(id):
     form = ArticleForm(request.form)
     if request.method == 'POST' and form.validate():
-        article = get_job_by_id(form.id.data)
+        article = get_article(form.id.data)
         article.title = form.title.data
         article.date = get_date_from_str(form.date.data)
         article.place = form.place.data
@@ -65,7 +66,7 @@ def admin_news(id):
         logger.info("{0} post data of job {1}.".format(g.current_user.name, id))
         return redirect(url_for('admin.admin_feeds', id=article.fid))
 
-    a = get_job_by_id(id)
+    a = get_article(id)
     fulltext = get_local_fulltext(a.id)
     if a.is_published:
         form.place.data = a.place
