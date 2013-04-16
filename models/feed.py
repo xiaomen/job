@@ -14,14 +14,26 @@ class Feed(db.Model):
         self.name = name
         self.stream_id = stream_id
 
+    @classmethod
+    def get(cls, id):
+        return cls.query.get(id)
+
+    @classmethod
+    def gets(cls, ids):
+        return [cls.get(id) for id in ids]
+
+    @classmethod
+    def get_all(cls):
+        return cls.query.all()
+
 def get_feed(id):
-    return Feed.query.get(id)
+    return Feed.get(id)
 
 def get_feeds(ids):
-    return Feed.query.filter(Feed.id.in_(ids)).all()
+    return Feed.gets(ids)
 
 def get_all_feeds():
-    return Feed.query.all()
+    return Feed.get_all()
 
 def get_enabled_feeds():
     return Feed.query.filter_by(enabled=1)

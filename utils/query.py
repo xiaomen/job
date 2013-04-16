@@ -2,9 +2,9 @@
 # coding:utf-8
 
 from paginator import gen_list_paginator
-from models import *
 from models.article import * 
-from models.favorite import get_favorite_page
+from models.favorite import * 
+from models.feed import *
 from config import PER_PAGE
 
 

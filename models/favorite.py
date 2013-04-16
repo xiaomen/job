@@ -1,8 +1,9 @@
-from sheep.api.cache import cache
+from sheep.api.cache import cache, backend
 
 from config import DOMAIN, PER_PAGE
-from models import db, IntegrityError
-from utils.query import get_article
+from models import db
+
+_JOB_FAV_KEY = 'j:f:%s:%s'
 
 class Favorite(db.Model):
     __tablename__ = 'favorite'
@@ -15,27 +16,22 @@ class Favorite(db.Model):
         self.uid = uid
         self.aid = aid
 
-def add_favorite(uid, aid):
-    if not get_article(aid):
-        return None
+    @classmethod
+    @cache(_JOB_FAV_KEY % ('{uid}', '{aid}'))
+    def get(cls, uid, aid):
+        return cls.query.filter_by(uid=uid, aid=aid).first()
 
-    f = Favorite(uid, aid)
-    try:
-        db.session.add(f)
+    def delete(self):
+        backend.delete(_JOB_FAV_KEY % (self.uid, self.aid))
+        db.session.delete(self)
         db.session.commit()
-    except IntegrityError:
-        pass
-    return f
+
+    @classmethod
+    def paginator(cls, page, per_page, **kw):
+        return cls.query.filter_by(**kw).paginate(page, per_page=per_page)
 
 def get_favorite(uid, aid):
-    return Favorite.query.filter_by(uid=uid, aid=aid).first()
-
-def delete_favorite(uid, aid):
-    f = get_favorite(uid, aid)
-    if not f:
-        return
-    db.session.delete(f)
-    db.session.commit()
+    return Favorite.get(uid=uid, aid=aid)
 
 def get_favorite_page(page, per_page, **kw):
-    return Favorite.query.filter_by(**kw).paginate(page, per_page=per_page)
+    return Favorite.paginator(page, per_page, **kw)

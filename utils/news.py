@@ -1,10 +1,9 @@
-from models import *
-from models.feed import get_feed
+from utils.query import get_feed
 
 def get_point_of_news(d, news):
-    for new in news:
-        if new.created.date() == d:
-            return new
+    for n in news:
+        if n.created.date() == d:
+            return n
     return None
 
 def get_feed_name_of_job(job):

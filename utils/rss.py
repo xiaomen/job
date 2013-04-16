@@ -4,8 +4,9 @@
 import config
 import feedparser
 
-from models.article import db, Article
-from models.feed import get_all_feeds 
+from models import db
+from models.article import Article
+from utils.query import get_all_feeds 
 
 from lib.reader import GoogleReader
 

@@ -1,6 +1,7 @@
+from functools import wraps
+
 import flask
 from flask import request
-from functools import wraps
 from werkzeug.useragents import UserAgent
 
 def check_ua(method):

@@ -1,7 +1,6 @@
 from datetime import datetime, date
 
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.sqlalchemy import sqlalchemy
+from flask.ext.sqlalchemy import SQLAlchemy, sqlalchemy
 
 IntegrityError = sqlalchemy.exc.IntegrityError
 

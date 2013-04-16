@@ -9,16 +9,16 @@ import logging
 
 from flask import abort
 from lxml import etree, html
-from models.article_content import get_article_content
-from models.favorite import add_favorite, get_favorite
+from utils.query import get_article
 
 logger = logging.getLogger(__name__)
 
 def get_local_fulltext(aid):
-    content = get_article_content(aid) 
+    a = get_article(aid)
+    content = a and a.body or '' 
     if not content:
         return None
-    return content.fulltext
+    return content
 
 def get_fulltext(url):
     try:

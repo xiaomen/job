@@ -17,5 +17,5 @@ daemons:
   mem_limit: 64M
 
 services:
-- name: service.api 
+- name: service.api
   handler: collect

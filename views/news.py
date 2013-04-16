@@ -6,7 +6,7 @@ from flask import Blueprint, request, abort, \
 
 from models.article import get_article 
 from models.feed import get_enabled_feeds
-from models.favorite import get_favorite, add_favorite, delete_favorite
+from models.favorite import get_favorite
 from utils import *
 
 logger = logging.getLogger(__name__)
@@ -80,9 +80,9 @@ def favorite(aid):
         abort(404)
 
     if action == 'add':
-        add_favorite(g.current_user.uid, aid)
+        a.collect(g.current_user.uid)
     elif action == 'delete':
-        delete_favorite(g.current_user.uid, aid)
+        a.decollect(g.current_user.uid)
     else:
         abort(400)
 

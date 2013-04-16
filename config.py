@@ -14,4 +14,4 @@ TIME_FORMAT = [u'%Y-%m-%d %H:%M', u'%Y-%m-%d %H:%M:%S', u'%Y年%m月%d日%H:%M',
 
 admins = ['luoruici', 'aixiaowan', 'hnubbs']
 
-DOMAIN = 'http://0.0.0.0:8080'
+DOMAIN = 'http://xiaomen.co'

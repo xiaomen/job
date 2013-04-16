@@ -10,7 +10,6 @@ from admin import *
 from news import *
 from rss import *
 from query import *
-from helper import *
 from fulltext import *
 
 json_encoder = json.JSONEncoder()
