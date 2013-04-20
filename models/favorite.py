@@ -1,9 +1,10 @@
 from sheep.api.cache import cache, backend
 
-from config import DOMAIN, PER_PAGE
-from models import db
+from models import db, desc
+from utils.cache import npcache
 
 _JOB_FAV_KEY = 'j:f:%s:%s'
+_JOB_FAV_ARTICLE = 'j:f:a:%s'
 
 class Favorite(db.Model):
     __tablename__ = 'favorite'
@@ -25,13 +26,20 @@ class Favorite(db.Model):
         backend.delete(_JOB_FAV_KEY % (self.uid, self.aid))
         db.session.delete(self)
         db.session.commit()
+        _flush_favorite(self.uid, self.aid)
 
-    @classmethod
-    def paginator(cls, page, per_page, **kw):
-        return cls.query.filter_by(**kw).paginate(page, per_page=per_page)
+def _flush_favorite(uid, aid):
+    backend.delete(_JOB_FAV_KEY % (uid, aid))
+
+def _flush_favorite_page(uid):
+    backend.delete(_JOB_FAV_ARTICLE % uid)
 
 def get_favorite(uid, aid):
     return Favorite.get(uid=uid, aid=aid)
 
-def get_favorite_page(page, per_page, **kw):
-    return Favorite.paginator(page, per_page, **kw)
+@npcache(_JOB_FAV_ARTICLE % '{uid}', count=300)
+def get_favorite_page(uid, start, limit):
+    query = Favorite.query.filter_by(uid=uid).order_by(desc(Favorite.id))
+    n = query.count()
+    rs = query.offset(start).limit(limit).all()
+    return n, rs

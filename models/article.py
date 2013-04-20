@@ -1,13 +1,21 @@
+# -*- coding:utf-8 -*-
+
 from datetime import datetime, date
 
-from sheep.api.cache import cache
+from sheep.api.cache import cache, backend
 
 from config import DOMAIN
-from models import db, IntegrityError
-from models.favorite import Favorite
+from utils.cache import npcache
+from models import db, desc, IntegrityError
+from models.favorite import Favorite, _flush_favorite_page
 
 _JOB_ARTICEL_KEY = 'j:a:%s'
 _JOB_ARTICLE_C_KEY = 'j:ac:%s'
+_JOB_SHOW_ARTICLES = 'j:a:q:show'
+_JOB_NONE_INTERN_ARTICLES = 'j:a:q:noneintern'
+_JOB_FEED_ARTICLES = 'j:a:f:%s'
+_JOB_ALL_ARTICLES = 'j:a:all:%s:%s'
+_JOB_FEED_COUNT = 'j:a:fc:%s'
 
 def get_today():
     t = date.today()
@@ -57,10 +65,17 @@ class Article(db.Model):
         return [cls.get(i) for i in ids]
 
     @classmethod
+    def get_ids(cls):
+        '''这个方法纯粹为了缓存, Article很大而且获取单个实例会比较频繁,
+        所以把id缓存起来, 再从缓存里按照id取实例会比较划算'''
+        return db.session.query(Article.id)
+
+    @classmethod
     def create(cls, fid, title, place, pubdate, link, description, author):
         article = cls(fid, title, place, pubdate, link, description, author)
         db.session.add(article)
         db.session.commit()
+        _flush_article_page(fid)
         return article
 
     def collect(self, uid):
@@ -70,6 +85,7 @@ class Article(db.Model):
             db.session.commit()
         except IntegrityError:
             db.session.rollback()
+        _flush_favorite_page(uid)
         return f
 
     def decollect(self, uid):
@@ -78,6 +94,30 @@ class Article(db.Model):
         if not f:
             return
         f.delete()
+        _flush_favorite_page(uid)
+
+    def delete(self):
+        urs = db.session.query(Favorite.uid).filter_by(aid=self.id).all()
+
+        db.session.delete(self)
+        db.session.query(Favorite).filter_by(aid=self.id).delete()
+        db.session.query(ArticleContent).filter_by(aid=self.id).delete()
+        db.session.commit()
+
+        _flush_article_content(self.id)
+        _flush_article_page(self.fid)
+        ## TODO 这个写法是有点奇怪, 但是现在的数据表结构只能这么做=.=
+        ## 如果这个urs很大怎么搞... 是个问题... 要想一下
+        [_flush_favorite_page(uid) for uid in urs]
+
+    def update(self, title, date, place, is_published):
+        self.title = title
+        self.date = date
+        self.place = place
+        self.is_published = is_published
+        db.session.add(self)
+        db.session.commit()
+        _flush_article_page(self.fid)
 
 class ArticleContent(db.Model):
     __tablename__ = 'article_content'
@@ -119,25 +159,54 @@ def get_article(id):
 def get_articles(ids):
     return Article.gets(ids)
 
-def get_query_page(page, per_page, **kw):
-    result = get_article_by(**kw) \
-            .filter('date>now() and fid in (select id from feed where enabled=1)') \
-            .order_by(Article.date) \
-            .paginate(page, per_page=per_page)
-    return result
+@npcache(_JOB_SHOW_ARTICLES, count=300)
+def get_show_articles(start, limit):
+    query = get_article_ids_by(is_published=True).filter('date>now() and fid in (select id from feed where enabled=1)').order_by(Article.date)
+    rs = query.offset(start).limit(limit).all()
+    n = query.count()
+    return n, rs
 
-def get_query_page_without_intern(page, per_page, **kw):
-    result = get_article_by(**kw) \
-            .filter('fid<>1 and date>now() and fid in (select id from feed where enabled=1)') \
-            .order_by(Article.date) \
-            .paginate(page, per_page=per_page)
-    return result
+@npcache(_JOB_NONE_INTERN_ARTICLES, count=300)
+def get_none_intern_articles(start, limit):
+    query = get_article_ids_by(is_published=True).filter('fid<>1 and date>now() and fid in (select id from feed where enabled=1)').order_by(Article.date)
+    rs = query.offset(start).limit(limit).all()
+    n = query.count()
+    return n, rs 
 
-def get_page(page, per_page, **kw):
-    result = get_article_by(**kw) \
-            .order_by(desc(Article.date)) \
-            .paginate(page, per_page=per_page)
-    return result
+@npcache(_JOB_FEED_ARTICLES % '{fid}', count=300)
+def get_feed_articles(start, limit, fid):
+    query = get_article_ids_by(is_published=True, fid=fid).order_by(Article.date)
+    rs = query.offset(start).limit(limit).all()
+    n = query.count()
+    return n, rs 
+
+@npcache(_JOB_ALL_ARTICLES % ('{fid}', '{is_published}'), count=300)
+def get_page(start, limit, fid, is_published):
+    query = get_article_ids_by(fid=fid, is_published=is_published).order_by(desc(Article.date))
+    rs = query.offset(start).limit(limit).all()
+    n = query.count()
+    return n, rs
+
+@cache(_JOB_FEED_COUNT % '{fid}', expire=3600*24)
+def get_feed_articles_num(fid):
+    return get_article_ids_by(fid=fid).count()
 
 def get_article_by(**kw):
     return Article.query.filter_by(**kw)
+
+def get_article_ids_by(**kw):
+    return Article.get_ids().filter_by(**kw)
+
+def _flush_article_page(fid):
+    backend.delete(_JOB_SHOW_ARTICLES)
+    backend.delete(_JOB_NONE_INTERN_ARTICLES)
+    backend.delete(_JOB_FEED_ARTICLES % fid)
+    # TODO 这样写真的很奇怪...但是这货的is_published属性是在数据库直接set的...
+    # 刚刚create的时候都没得, 删除的时候也不一定有, 所以都flush掉
+    # 这样很挫, 应该想个什么策略...
+    backend.delete(_JOB_ALL_ARTICLES % (fid, True))
+    backend.delete(_JOB_ALL_ARTICLES % (fid, False))
+    backend.delete(_JOB_FEED_COUNT % fid)
+
+def _flush_article_content(aid):
+    backend.delete(_JOB_ARTICLE_C_KEY % aid)

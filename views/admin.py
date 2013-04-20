@@ -7,10 +7,10 @@ from flask import Blueprint, request, url_for, redirect
 from wtforms import Form, TextField, DateTimeField, HiddenField, validators
 from wtforms.validators import ValidationError
 
-from models import *
-from models.article import get_article
+from models import db
 from utils import *
-from config import TIME_FORMAT
+from utils.query import get_article
+from config import TIME_FORMAT, PER_PAGE
 
 logger = logging.getLogger(__name__)
 
@@ -57,17 +57,15 @@ def admin_news(id):
     form = ArticleForm(request.form)
     if request.method == 'POST' and form.validate():
         article = get_article(form.id.data)
-        article.title = form.title.data
-        article.date = get_date_from_str(form.date.data)
-        article.place = form.place.data
-        article.is_published = True
-        db.session.add(article)
-        db.session.commit()
+        title = form.title.data
+        date = get_date_from_str(form.date.data)
+        place = form.place.data
+        article.update(title, date, place, True)
         logger.info("{0} post data of job {1}.".format(g.current_user.name, id))
         return redirect(url_for('admin.admin_feeds', id=article.fid))
 
     a = get_article(id)
-    fulltext = get_local_fulltext(a.id)
+    fulltext = a.body 
     if a.is_published:
         form.place.data = a.place
         form.date.data = a.date.strftime('%Y-%m-%d %H:%M:%S')
@@ -87,9 +85,8 @@ def admin_news(id):
 def admin_feeds(id):
     page = request.args.get('p', '1')
     is_published = 'is_published' in request.args
-    if not page or not page.isdigit():
-        raise abort(404)
-    list_page = get_jobs(page, **dict(fid=id, is_published=is_published))
+    page = page.isdigit() and int(page) or 1
+    list_page = get_jobs(page, id, is_published, PER_PAGE)
 
     return render_template('admin.news.html', fid=id, list_page=list_page, \
             jobs=list_page.items,
@@ -98,6 +95,6 @@ def admin_feeds(id):
 @admin.route('/')
 @admin_required(need=True, next='http://xiaomen.co/account/register')
 def index():
-    feeds = get_feeds()
-
+    feeds = get_all_feeds()
     return render_template('admin.index.html', feeds=feeds)
+

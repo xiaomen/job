@@ -1,7 +1,12 @@
+# -*- coding:utf-8 -*-
+
 from sheep.api.cache import cache
 
 from config import DOMAIN
 from models import db
+
+_JOB_FEED_ALL = 'j:fd:all'
+_JOB_FEED_ENABLE = 'j:fd:enable'
 
 class Feed(db.Model):
     __tablename__ = 'feed'
@@ -32,9 +37,17 @@ def get_feed(id):
 def get_feeds(ids):
     return Feed.gets(ids)
 
+## feed看起来是数量不多变化也不会太大, 并且单个对象所占空间也不大的东西
+## 因此直接缓存对象, 不需要因为节约空间而缓存id
+
+@cache(_JOB_FEED_ALL, expire=86400)
 def get_all_feeds():
     return Feed.get_all()
 
+@cache(_JOB_FEED_ENABLE, expire=86400)
 def get_enabled_feeds():
-    return Feed.query.filter_by(enabled=1)
+    return Feed.query.filter_by(enabled=1).all()
 
+def _flush_feeds():
+    backend.delete(_JOB_FEED_ALL)
+    backend.delete(_JOB_FEED_ENABLE)

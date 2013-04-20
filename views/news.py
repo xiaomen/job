@@ -26,9 +26,9 @@ def get_jobs_in_feed(feed_id):
 
     feeds = get_enabled_feeds()
     if feed_id:
-        list_page = get_show_jobs(page, fid=feed_id, is_published=True)
+        list_page = get_show_jobs(page, per_page=PER_PAGE, fid=feed_id)
     else:
-        list_page = get_all_jobs(page, is_published=True)
+        list_page = get_all_jobs(page, per_page=PER_PAGE)
 
     return render_template('news.html', list_page=list_page,
                            jobs=list_page.items or [],

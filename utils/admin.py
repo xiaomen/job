@@ -11,5 +11,4 @@ def delete_job(id):
     job = get_article(id)
     if not job:
         abort(404)
-    db.session.delete(job)
-    db.session.commit()
+    job.delete()

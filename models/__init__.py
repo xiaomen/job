@@ -3,6 +3,7 @@ from datetime import datetime, date
 from flask.ext.sqlalchemy import SQLAlchemy, sqlalchemy
 
 IntegrityError = sqlalchemy.exc.IntegrityError
+desc = sqlalchemy.desc
 
 db = SQLAlchemy()
 
