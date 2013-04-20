@@ -36,8 +36,8 @@ class Article(db.Model):
     is_published = db.Column(db.Boolean, default=False)
     created = db.Column(db.DateTime, default=datetime.now)
 
-    def __init__(self, fid, title, place, 
-            pubdate, link, description, author):
+    def __init__(self, fid, title, place,
+                 pubdate, link, description, author):
         self.fid = fid
         self.title = title
         self.place = place
@@ -60,7 +60,7 @@ class Article(db.Model):
     def get(cls, id):
         return cls.query.get(id)
 
-    @classmethod 
+    @classmethod
     def gets(cls, ids):
         return [cls.get(i) for i in ids]
 
@@ -161,28 +161,32 @@ def get_articles(ids):
 
 @npcache(_JOB_SHOW_ARTICLES, count=300)
 def get_show_articles(start, limit):
-    query = get_article_ids_by(is_published=True).filter('date>now() and fid in (select id from feed where enabled=1)').order_by(Article.date)
+    query = get_article_ids_by(is_published=True).filter(
+        'date>now() and fid in (select id from feed where enabled=1)').order_by(Article.date)
     rs = query.offset(start).limit(limit).all()
     n = query.count()
     return n, rs
 
 @npcache(_JOB_NONE_INTERN_ARTICLES, count=300)
 def get_none_intern_articles(start, limit):
-    query = get_article_ids_by(is_published=True).filter('fid<>1 and date>now() and fid in (select id from feed where enabled=1)').order_by(Article.date)
+    query = get_article_ids_by(is_published=True).filter(
+        'fid<>1 and date>now() and fid in (select id from feed where enabled=1)').order_by(Article.date)
     rs = query.offset(start).limit(limit).all()
     n = query.count()
-    return n, rs 
+    return n, rs
 
 @npcache(_JOB_FEED_ARTICLES % '{fid}', count=300)
 def get_feed_articles(start, limit, fid):
-    query = get_article_ids_by(is_published=True, fid=fid).order_by(Article.date)
+    query = get_article_ids_by(
+        is_published=True, fid=fid).order_by(Article.date)
     rs = query.offset(start).limit(limit).all()
     n = query.count()
-    return n, rs 
+    return n, rs
 
 @npcache(_JOB_ALL_ARTICLES % ('{fid}', '{is_published}'), count=300)
 def get_page(start, limit, fid, is_published):
-    query = get_article_ids_by(fid=fid, is_published=is_published).order_by(desc(Article.date))
+    query = get_article_ids_by(
+        fid=fid, is_published=is_published).order_by(desc(Article.date))
     rs = query.offset(start).limit(limit).all()
     n = query.count()
     return n, rs
