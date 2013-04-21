@@ -56,7 +56,7 @@ class Article(db.Model):
         return a and a.fulltext or ''
 
     @classmethod
-    @cache(_JOB_ARTICEL_KEY % '{id}')
+    @cache(_JOB_ARTICEL_KEY % '{id}', expire=86400)
     def get(cls, id):
         return cls.query.get(id)
 
@@ -130,7 +130,7 @@ class ArticleContent(db.Model):
         self.fulltext = fulltext
 
     @classmethod
-    @cache(_JOB_ARTICLE_C_KEY % '{aid}')
+    @cache(_JOB_ARTICLE_C_KEY % '{aid}', expire=86400)
     def get(cls, aid):
         return cls.query.get(aid)
 
@@ -191,7 +191,7 @@ def get_page(start, limit, fid, is_published):
     n = query.count()
     return n, rs
 
-@cache(_JOB_FEED_COUNT % '{fid}', expire=3600*24)
+@cache(_JOB_FEED_COUNT % '{fid}', expire=86400)
 def get_feed_articles_num(fid):
     return get_article_ids_by(fid=fid).count()
 

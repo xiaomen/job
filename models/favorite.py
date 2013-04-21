@@ -18,7 +18,7 @@ class Favorite(db.Model):
         self.aid = aid
 
     @classmethod
-    @cache(_JOB_FAV_KEY % ('{uid}', '{aid}'))
+    @cache(_JOB_FAV_KEY % ('{uid}', '{aid}'), expire=86400)
     def get(cls, uid, aid):
         return cls.query.filter_by(uid=uid, aid=aid).first()
 
