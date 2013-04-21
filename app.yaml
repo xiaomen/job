@@ -16,3 +16,6 @@ daemons:
   script: feed.py --verbose
   mem_limit: 64M
 
+services:
+- name: service.api
+  handler: collect

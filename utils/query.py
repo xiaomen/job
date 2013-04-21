@@ -1,47 +1,45 @@
 #!/usr/bin/python
-#coding:utf-8
+# coding:utf-8
 
-from helper import gen_list_page_obj
+from paginator import Paginator
+from models.article import * 
+from models.favorite import * 
+from models.feed import *
+from config import PER_PAGE
 
-from models import *
 
-from config import PAGE_NUM
+def get_all_jobs(page, per_page=PER_PAGE):
+    start = (page - 1) * per_page
+    n, rs = get_none_intern_articles(start, per_page)
+    items = get_articles(rs)
+    return Paginator(page, items, per_page=per_page, total=n) 
 
-def get_feeds():
-    return Feed.get_feeds()
 
-def get_enabled_feeds():
-    return Feed.get_enabled_feeds()
+def get_show_jobs(page, per_page=PER_PAGE, fid=None):
+    start = (page - 1) * per_page 
+    if fid:
+        n, rs = get_feed_articles(start, per_page, fid)
+    else:
+        n, rs = get_show_articles(start, per_page)
+    items = get_articles(rs)
+    return Paginator(page, items, per_page=per_page, total=n) 
 
-def get_all_jobs(page, **kw):
-    page = int(page)
-    page_obj = Article.get_query_page_without_intern(page, per_page=PAGE_NUM, **kw)
-    return gen_list_page_obj(page_obj)
 
-def get_show_jobs(page, **kw):
-    page = int(page)
-    page_obj = Article.get_query_page(page, per_page=PAGE_NUM, **kw)
-    return gen_list_page_obj(page_obj)
+def get_jobs(page, fid, is_published, per_page=PER_PAGE):
+    start = (page - 1) * per_page
+    n, rs = get_page(start, per_page, fid, is_published)
+    items = get_articles(rs)
+    return Paginator(page, items, per_page=per_page, total=n) 
 
-def get_jobs(page, **kw):
-    page = int(page)
-    page_obj = Article.get_page(page, per_page=PAGE_NUM, **kw)
-    return gen_list_page_obj(page_obj)
 
 def get_favorite_job_by_user(uid, page):
     page = int(page)
-    page_obj = Favorite.query.filter_by(uid=uid).paginate(page, per_page=PAGE_NUM)
-    page_obj.items = [get_job_by_id(i.aid) for i in page_obj.items]
-    return gen_list_page_obj(page_obj)
+    start = (page - 1) * PER_PAGE
+    n, rs = get_favorite_page(uid, start, PER_PAGE)
+    items = [get_article(f.aid) for f in rs]
+    return Paginator(page, items, per_page=PER_PAGE, total=n) 
 
-def get_feed_by_id(fid):
-    return Feed.query.get(fid)
-
-def get_job_by_id(aid):
-    return Article.query.get(aid)
 
 def get_jobs_count(fid):
-    return get_job_by(fid=fid).count()
+    return get_feed_articles_num(fid)
 
-def get_job_by(**kw):
-    return Article.query.filter_by(**kw)

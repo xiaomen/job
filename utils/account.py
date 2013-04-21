@@ -1,4 +1,5 @@
 from functools import wraps
+
 from flask import g, url_for, redirect, request, abort
 from config import admins
 
