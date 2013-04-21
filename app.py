@@ -11,6 +11,7 @@ from models import *
 from utils import *
 from views.admin import admin
 from views.news import news
+from views.api import api
 
 from sheep.api.statics import static_files
 from sheep.api.sessions import SessionMiddleware, \
@@ -40,6 +41,7 @@ app.config.update(
 
 app.register_blueprint(admin, url_prefix='/admin')
 app.register_blueprint(news, url_prefix='/news')
+app.register_blueprint(api, url_prefix='/api')
 
 init_db(app)
 
