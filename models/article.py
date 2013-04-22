@@ -9,13 +9,13 @@ from utils.cache import npcache
 from models import db, desc, IntegrityError
 from models.favorite import Favorite, _flush_favorite_page
 
-_JOB_ARTICEL_KEY = 'j:a:%s'
-_JOB_ARTICLE_C_KEY = 'j:ac:%s'
-_JOB_SHOW_ARTICLES = 'j:a:q:show'
-_JOB_NONE_INTERN_ARTICLES = 'j:a:q:noneintern'
-_JOB_FEED_ARTICLES = 'j:a:f:%s'
-_JOB_ALL_ARTICLES = 'j:a:all:%s:%s'
-_JOB_FEED_COUNT = 'j:a:fc:%s'
+_JOB_ARTICEL_KEY = 'j2:a:%s'
+_JOB_ARTICLE_C_KEY = 'j2:ac:%s'
+_JOB_SHOW_ARTICLES = 'j2:a:q:show'
+_JOB_NONE_INTERN_ARTICLES = 'j2:a:q:noneintern'
+_JOB_FEED_ARTICLES = 'j2:a:f:%s'
+_JOB_ALL_ARTICLES = 'j2:a:all:%s:%s'
+_JOB_FEED_COUNT = 'j2:a:fc:%s'
 
 def get_today():
     t = date.today()
@@ -132,7 +132,7 @@ class ArticleContent(db.Model):
     @classmethod
     @cache(_JOB_ARTICLE_C_KEY % '{aid}', expire=86400)
     def get(cls, aid):
-        return cls.query.get(aid)
+        return cls.query.filter_by(aid=aid).first()
 
     @classmethod
     def create(cls, aid, fulltext):
@@ -162,7 +162,7 @@ def get_articles(ids):
 @npcache(_JOB_SHOW_ARTICLES, count=300)
 def get_show_articles(start, limit):
     query = get_article_ids_by(is_published=True).filter(
-        'date>now() and fid in (select id from feed where enabled=1)').order_by(Article.date)
+        'date>now() and fid in (select id from feed where enabled=1)').order_by(desc(Article.date))
     rs = query.offset(start).limit(limit).all()
     n = query.count()
     return n, rs
@@ -170,7 +170,7 @@ def get_show_articles(start, limit):
 @npcache(_JOB_NONE_INTERN_ARTICLES, count=300)
 def get_none_intern_articles(start, limit):
     query = get_article_ids_by(is_published=True).filter(
-        'fid<>1 and date>now() and fid in (select id from feed where enabled=1)').order_by(Article.date)
+        'fid<>1 and date>now() and fid in (select id from feed where enabled=1)').order_by(desc(Article.date))
     rs = query.offset(start).limit(limit).all()
     n = query.count()
     return n, rs
@@ -178,7 +178,7 @@ def get_none_intern_articles(start, limit):
 @npcache(_JOB_FEED_ARTICLES % '{fid}', count=300)
 def get_feed_articles(start, limit, fid):
     query = get_article_ids_by(
-        is_published=True, fid=fid).order_by(Article.date)
+        is_published=True, fid=fid).order_by(desc(Article.date))
     rs = query.offset(start).limit(limit).all()
     n = query.count()
     return n, rs
