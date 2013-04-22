@@ -21,9 +21,9 @@ def get_all_jobs_in_feed():
     page = page.isdigit() and int(page) or 1 
 
     if univ:
-        list_page = get_all_jobs(page, is_published=True, fid=univ)
+        list_page = get_show_jobs(page, per_page=PER_PAGE, fid=univ)
     else:
-        list_page = get_all_jobs(page, is_published=True)
+        list_page = get_all_jobs(page, per_page=PER_PAGE)
 
     r = []
     for item in list_page.items:
@@ -31,5 +31,5 @@ def get_all_jobs_in_feed():
             r.append({'aid': item.id, 'fid': item.fid,
                 'title': item.title, 'place': item.place,
                 'url': item.url, 'src': item.link })
-    d = {'total': len(list_page.items), 'list': r}
+    d = {'list': r, 'more': not (len(r)<PER_PAGE)}
     return d
