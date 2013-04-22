@@ -9,13 +9,13 @@ from utils.cache import npcache
 from models import db, desc, IntegrityError
 from models.favorite import Favorite, _flush_favorite_page
 
-_JOB_ARTICEL_KEY = 'j:a:%s'
-_JOB_ARTICLE_C_KEY = 'j:ac:%s'
-_JOB_SHOW_ARTICLES = 'j:a:q:show'
-_JOB_NONE_INTERN_ARTICLES = 'j:a:q:noneintern'
-_JOB_FEED_ARTICLES = 'j:a:f:%s'
-_JOB_ALL_ARTICLES = 'j:a:all:%s:%s'
-_JOB_FEED_COUNT = 'j:a:fc:%s'
+_JOB_ARTICEL_KEY = 'j2:a:%s'
+_JOB_ARTICLE_C_KEY = 'j2:ac:%s'
+_JOB_SHOW_ARTICLES = 'j2:a:q:show'
+_JOB_NONE_INTERN_ARTICLES = 'j2:a:q:noneintern'
+_JOB_FEED_ARTICLES = 'j2:a:f:%s'
+_JOB_ALL_ARTICLES = 'j2:a:all:%s:%s'
+_JOB_FEED_COUNT = 'j2:a:fc:%s'
 
 def get_today():
     t = date.today()
