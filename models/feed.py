@@ -7,11 +7,12 @@ from models import db
 
 _JOB_FEED_ALL = 'j:fd:all'
 _JOB_FEED_ENABLE = 'j:fd:enable'
+_JOB_FEED_NAME = 'j:fd:n:%s'
 
 class Feed(db.Model):
     __tablename__ = 'feed'
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(100), nullable=False)
+    name = db.Column(db.String(100), nullable=False, index=True)
     stream_id = db.Column(db.String(200), nullable=False)
     enabled = db.Column('enabled', db.Boolean, nullable=False, default=True)
 
@@ -48,6 +49,11 @@ def get_all_feeds():
 def get_enabled_feeds():
     return Feed.query.filter_by(enabled=1).all()
 
+@cache(_JOB_FEED_NAME % '{name}', expire=86400)
+def get_feed_by_name(name):
+    return Feed.query.filter_by(name=name).first()
+
 def _flush_feeds():
     backend.delete(_JOB_FEED_ALL)
     backend.delete(_JOB_FEED_ENABLE)
+    backend.delete(_JOB_FEED_NAME)
