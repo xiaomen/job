@@ -4,6 +4,8 @@
 import json
 from functools import wraps
 
+from flask import jsonify
+
 from account import *
 from ua import *
 from admin import *
@@ -16,7 +18,7 @@ json_encoder = json.JSONEncoder()
 json_decoder = json.JSONDecoder()
 
 def encode(s):
-    return json_encoder.encode(s)
+    return jsonify(s)
 
 def decode(s):
     return json_decoder.decode(s)
@@ -28,3 +30,5 @@ def jsonize(f):
         return encode(r)
     return _
 
+def to_utf8(s):
+    return s.encode('utf-8')
