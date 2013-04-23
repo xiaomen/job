@@ -33,7 +33,7 @@ def detail(uid, aid):
     return dict(aid=article.id, feed=feed.name,
             date=article.date.strftime('%Y-%m-%d %H:%M'),
             expired=(datetime.now() > article.date), place=article.place,
-            pubdate=article.pubdate, link=article.link, url=item.url)
+            pubdate=article.pubdate, link=article.link, url=article.url)
 
 @check_user
 def list_jobs(uid, page, name=''):
