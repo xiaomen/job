@@ -5,7 +5,8 @@ from datetime import datetime
 
 import app
 
-from utils.query import get_article, get_favorite_job_by_user, get_feed, get_show_jobs
+from utils.query import get_article, get_favorite_job_by_user, get_feed,\
+        get_show_jobs, get_feed_by_name
 from service import check_user
 
 _INTERN = 1
@@ -35,7 +36,9 @@ def detail(uid, aid):
             pubdate=article.pubdate, link=article.link, text=article.body)
 
 @check_user
-def list_jobs(uid, page, fid=None):
+def list_jobs(uid, page, name=''):
+    f = get_feed_by_name(name)
+    fid = f and f.id or None
     list_page = get_show_jobs(page, fid=fid)
     return __job_to_dict(list_page)
 
