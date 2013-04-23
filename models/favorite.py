@@ -1,7 +1,6 @@
-from sheep.api.cache import cache, backend
+from sheep.api.cache import cache, npcache, backend
 
 from models import db, desc
-from utils.cache import npcache
 
 _JOB_FAV_KEY = 'j:f:%s:%s'
 _JOB_FAV_ARTICLE = 'j:f:a:%s'
