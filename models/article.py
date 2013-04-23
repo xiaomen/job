@@ -2,10 +2,9 @@
 import re
 from datetime import datetime, date
 
-from sheep.api.cache import cache, backend
+from sheep.api.cache import cache, npcache, backend
 
 from config import DOMAIN
-from utils.cache import npcache
 from models import db, desc, IntegrityError
 from models.favorite import Favorite, _flush_favorite_page
 
