@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-
+import re
 from datetime import datetime, date
 
 from sheep.api.cache import cache, backend
@@ -53,7 +53,11 @@ class Article(db.Model):
     @property
     def body(self):
         a = get_article_content(self.id)
-        return a and a.fulltext or ''
+        r = a and a.fulltext or ''
+        # TODO 很挫, 要从源头上消除这个问题
+        r = re.sub(r'<\s*script\s*>', '&lt;script&gt;', r)
+        r = re.sub(r'<\s*/\s*script\s*>', '&lt;/script&gt;', r)
+        return r
 
     @classmethod
     @cache(_JOB_ARTICEL_KEY % '{id}', expire=86400)

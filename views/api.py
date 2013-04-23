@@ -17,19 +17,16 @@ def index():
 @jsonize
 def get_all_jobs_in_feed():
     page = request.args.get('p', '1')
-    univ = request.args.get('u', '')
+    univ = request.args.get('u', None)
     page = page.isdigit() and int(page) or 1 
 
-    if univ:
-        list_page = get_show_jobs(page, per_page=PER_PAGE, fid=univ)
-    else:
-        list_page = get_all_jobs(page, per_page=PER_PAGE)
+    list_page = get_show_jobs(page, per_page=PER_PAGE, fid=univ)
 
     r = []
     for item in list_page.items:
         if item:
             r.append({'aid': item.id, 'fid': item.fid,
-                'title': item.title, 'place': item.place,
+                'title': to_utf8(item.title), 'place': to_utf8(item.place),
                 'url': item.url, 'src': item.link })
     d = {'list': r, 'more': not (len(r)<PER_PAGE)}
     return d
