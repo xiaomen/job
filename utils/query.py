@@ -8,19 +8,12 @@ from models.feed import *
 from config import PER_PAGE
 
 
-def get_all_jobs(page, per_page=PER_PAGE):
-    start = (page - 1) * per_page
-    n, rs = get_none_intern_articles(start, per_page)
-    items = get_articles(rs)
-    return Paginator(page, items, per_page=per_page, total=n) 
-
-
 def get_show_jobs(page, per_page=PER_PAGE, fid=None):
     start = (page - 1) * per_page 
     if fid:
         n, rs = get_feed_articles(start, per_page, fid)
     else:
-        n, rs = get_show_articles(start, per_page)
+        n, rs = get_none_intern_articles(start, per_page)
     items = get_articles(rs)
     return Paginator(page, items, per_page=per_page, total=n) 
 
