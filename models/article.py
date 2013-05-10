@@ -8,13 +8,13 @@ from config import DOMAIN
 from models import db, desc, IntegrityError
 from models.favorite import Favorite, _flush_favorite_page
 
-_JOB_ARTICEL_KEY = 'j2:a:%s'
-_JOB_ARTICLE_C_KEY = 'j2:ac:%s'
-_JOB_SHOW_ARTICLES = 'j2:a:q:show'
-_JOB_NONE_INTERN_ARTICLES = 'j2:a:q:noneintern'
-_JOB_FEED_ARTICLES = 'j2:a:f:%s'
-_JOB_ALL_ARTICLES = 'j2:a:all:%s:%s'
-_JOB_FEED_COUNT = 'j2:a:fc:%s'
+_JOB_ARTICEL_KEY = 'j:a:%s'
+_JOB_ARTICLE_C_KEY = 'j:ac:%s'
+_JOB_SHOW_ARTICLES = 'j:a:q:show'
+_JOB_NONE_INTERN_ARTICLES = 'j:a:q:noneintern'
+_JOB_FEED_ARTICLES = 'j:a:f:%s'
+_JOB_ALL_ARTICLES = 'j:a:all:%s:%s'
+_JOB_FEED_COUNT = 'j:a:fc:%s'
 
 def get_today():
     t = date.today()
@@ -168,7 +168,7 @@ def get_show_articles(start, limit):
         'date>now() and fid in (select id from feed where enabled=1)').order_by(desc(Article.date))
     rs = query.offset(start).limit(limit).all()
     n = query.count()
-    return n, rs
+    return n, [r for r, in rs]
 
 @npcache(_JOB_NONE_INTERN_ARTICLES, count=300)
 def get_none_intern_articles(start, limit):
@@ -176,7 +176,7 @@ def get_none_intern_articles(start, limit):
         'fid<>1 and date>now() and fid in (select id from feed where enabled=1)').order_by(desc(Article.date))
     rs = query.offset(start).limit(limit).all()
     n = query.count()
-    return n, rs
+    return n, [r for r, in rs]
 
 @npcache(_JOB_FEED_ARTICLES % '{fid}', count=300)
 def get_feed_articles(start, limit, fid):
@@ -184,7 +184,7 @@ def get_feed_articles(start, limit, fid):
         is_published=True, fid=fid).order_by(desc(Article.date))
     rs = query.offset(start).limit(limit).all()
     n = query.count()
-    return n, rs
+    return n, [r for r, in rs]
 
 @npcache(_JOB_ALL_ARTICLES % ('{fid}', '{is_published}'), count=300)
 def get_page(start, limit, fid, is_published):
@@ -192,7 +192,7 @@ def get_page(start, limit, fid, is_published):
         fid=fid, is_published=is_published).order_by(desc(Article.date))
     rs = query.offset(start).limit(limit).all()
     n = query.count()
-    return n, rs
+    return n, [r for r, in rs]
 
 @cache(_JOB_FEED_COUNT % '{fid}', expire=86400)
 def get_feed_articles_num(fid):
